@@ -1,0 +1,44 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        defaultPublishConfig "debug"
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets { debug { java.srcDirs = ['src/debug/java', 'src/debug/java/'] } }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // RxJava
+    compile "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
+    compile 'io.reactivex.rxjava2:rxandroid:' + project.rxAndroidVersion
+
+    // Android support
+    compile 'com.android.support:appcompat-v7:' + project.appcompatVersion
+    compile 'com.android.support:multidex:' + project.multidexVersion
+    compile 'com.android.support:preference-v7:' + project.appcompatVersion
+    compile 'com.android.support:design:' + project.appcompatVersion
+    compile 'com.android.support:gridlayout-v7:' + project.appcompatVersion
+    testCompile 'junit:junit:4.12'
+}

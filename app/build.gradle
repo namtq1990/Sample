@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "quangnam.com.sample"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+configurations.all {
+    resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+}
+
+dependencies {
+    compile project(":base")
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    // RxJava
+    compile "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
+
+    // Dagger
+    compile "com.google.dagger:dagger:$project.daggerVersion"
+    compile "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+
+    // Google support
+    compile "com.android.support:appcompat-v7:$project.appcompatVersion"
+    compile "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
+    testCompile 'junit:junit:4.12'
+}
