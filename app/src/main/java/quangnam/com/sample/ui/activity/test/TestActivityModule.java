@@ -1,4 +1,4 @@
-package quangnam.com.sample.test;
+package quangnam.com.sample.ui.activity.test;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,12 +12,12 @@ import dagger.Provides;
 public class TestActivityModule {
 
     @Provides
-    ITestPresenter.ITestView provideView(TestActivity activity) {
+    ITestActivity.IView provideTestView(TestActivity activity) {
         return activity;
     }
 
     @Provides
-    ITestPresenter providePresenter(ITestPresenter.ITestView view) {
+    ITestActivity.IPresenter provideTestPresenter(ITestActivity.IView view) {
         return new TestPresenter();
     }
 }

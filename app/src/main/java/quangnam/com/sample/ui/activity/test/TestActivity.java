@@ -1,4 +1,4 @@
-package quangnam.com.sample.test;
+package quangnam.com.sample.ui.activity.test;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,9 +9,10 @@ import dagger.android.AndroidInjection;
 import quangnam.com.base.fragment.AlertDialogFragment;
 import quangnam.com.sample.R;
 import quangnam.com.sample.base.BaseActivity;
+import quangnam.com.sample.base.MvpActivity;
 import quangnam.com.sample.di.ApplicationContext;
 
-public class TestActivity extends BaseActivity implements ITestPresenter.ITestView {
+public class TestActivity extends MvpActivity implements ITestActivity.IView {
     private static final String TAG = TestActivity.class.getSimpleName();
 
     @Inject
@@ -19,7 +20,7 @@ public class TestActivity extends BaseActivity implements ITestPresenter.ITestVi
     Context mContext;
 
     @Inject
-    ITestPresenter mPresenter;
+    ITestActivity.IPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
