@@ -24,8 +24,6 @@
 
 package quangnam.com.base.interfaces;
 
-import org.reactivestreams.Subscription;
-
 import io.reactivex.disposables.Disposable;
 
 /**

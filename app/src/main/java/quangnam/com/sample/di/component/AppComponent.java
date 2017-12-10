@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import dagger.android.AndroidInjectionModule;
+import dagger.android.support.AndroidSupportInjectionModule;
 import quangnam.com.sample.di.module.ActivityBuilder;
 import quangnam.com.sample.di.module.AppModule;
 
@@ -16,7 +16,7 @@ import quangnam.com.sample.di.module.AppModule;
  * Project base
  */
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class})
+@Component(modules = {AndroidSupportInjectionModule.class, AppModule.class, ActivityBuilder.class})
 public interface AppComponent {
 
     @Component.Builder

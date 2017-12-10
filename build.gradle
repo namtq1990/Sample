@@ -33,7 +33,7 @@ allprojects {
         rxAndroidVersion = '2.0.1'
 
         // Dagger
-        daggerVersion = '2.11'  // 2.12
+        daggerVersion = '2.13'  // 2.12
     }
 }
 

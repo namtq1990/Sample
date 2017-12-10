@@ -9,7 +9,7 @@ import java.util.Map;
  */
 
 public class ExtraBaseException extends BaseException {
-    private Map<String, Object> mExtraData;
+    private final Map<String, Object> mExtraData;
 
     public ExtraBaseException(int errorCode, String message) {
         this(errorCode, message, null);

@@ -34,7 +34,7 @@ public class AlertDialogFragment extends BaseDialog {
     public static final int ACTION_REQUEST_SIGN_IN = 10;
 
     private AlertDialogListener mListener;
-    private DialogInterface.OnClickListener mOnClick = new DialogInterface.OnClickListener() {
+    private final DialogInterface.OnClickListener mOnClick = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             if (mListener != null) {

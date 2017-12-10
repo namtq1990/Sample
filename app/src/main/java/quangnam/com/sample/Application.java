@@ -1,14 +1,11 @@
 package quangnam.com.sample;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 import quangnam.com.sample.di.component.DaggerAppComponent;
 
 /**
@@ -16,13 +13,10 @@ import quangnam.com.sample.di.component.DaggerAppComponent;
  * Project base
  */
 
-public class Application extends quangnam.com.base.Application implements HasActivityInjector, HasSupportFragmentInjector {
+public class Application extends quangnam.com.base.Application implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> mActivityDispatchingAndroidInjector;
-
-    @Inject
-    DispatchingAndroidInjector<Fragment> mFragmentDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
@@ -37,10 +31,5 @@ public class Application extends quangnam.com.base.Application implements HasAct
     @Override
     public DispatchingAndroidInjector<Activity> activityInjector() {
         return mActivityDispatchingAndroidInjector;
-    }
-
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return mFragmentDispatchingAndroidInjector;
     }
 }

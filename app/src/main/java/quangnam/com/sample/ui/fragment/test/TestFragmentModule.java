@@ -20,4 +20,5 @@ public class TestFragmentModule {
     ITestFragment.IPresenter providePresenter(ITestFragment.IView view) {
         return new TestPresenter();
     }
+
 }

@@ -23,4 +23,11 @@ public class AppModule {
     Context provideContext(Application application) {
         return application;
     }
+
+    @Provides
+    @Singleton
+    @ApplicationContext
+    quangnam.com.sample.Application provideApplication(quangnam.com.base.Application application) {
+        return (quangnam.com.sample.Application) application;
+    }
 }

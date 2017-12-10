@@ -3,14 +3,14 @@ package quangnam.com.sample.di;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import javax.inject.Scope;
+import javax.inject.Qualifier;
 
 /**
- * Created by quangnam on 10/16/17.
- * Project base
+ * Created by quangnam on 12/10/17.
+ * Project Sample
  */
 
-@Scope
+@Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PerApplication {
+public @interface ActivityFragmentManager {
 }
