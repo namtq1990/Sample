@@ -1,4 +1,4 @@
-package quangnam.com.sample.ui.activity.test;
+package quangnam.com.sample.ui.test.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 import quangnam.com.sample.R;
 import quangnam.com.sample.base.MvpActivity;
 import quangnam.com.sample.di.PerActivity;
-import quangnam.com.sample.ui.fragment.test.TestFragment;
+import quangnam.com.sample.ui.test.fragment.TestFragment;
 
 public class TestActivity extends MvpActivity implements ITestActivity.IView,
         HasSupportFragmentInjector  // Use if fragment need DI only

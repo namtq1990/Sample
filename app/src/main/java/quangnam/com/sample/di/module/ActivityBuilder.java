@@ -3,10 +3,10 @@ package quangnam.com.sample.di.module;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import quangnam.com.sample.di.PerActivity;
-import quangnam.com.sample.ui.activity.test.TestActivity;
-import quangnam.com.sample.ui.activity.test.TestActivityModule;
-import quangnam.com.sample.ui.activity.test.ViewPagerTestActivity;
-import quangnam.com.sample.ui.activity.test.ViewPagerTestModule;
+import quangnam.com.sample.ui.test.activity.TestActivity;
+import quangnam.com.sample.ui.test.activity.TestActivityModule;
+import quangnam.com.sample.ui.test.activity.ViewPagerTestActivity;
+import quangnam.com.sample.ui.test.activity.ViewPagerTestModule;
 
 /**
  * Created by quangnam on 10/16/17.

@@ -1,4 +1,4 @@
-package quangnam.com.sample.ui.activity.test;
+package quangnam.com.sample.ui.test.activity;
 
 import quangnam.com.sample.base.IBasePresenter;
 import quangnam.com.sample.base.IBaseView;

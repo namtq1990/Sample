@@ -1,4 +1,4 @@
-package quangnam.com.sample.ui.fragment.test;
+package quangnam.com.sample.ui.test.fragment;
 
 import android.support.v4.app.Fragment;
 
