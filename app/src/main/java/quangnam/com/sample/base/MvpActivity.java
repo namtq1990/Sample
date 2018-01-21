@@ -2,8 +2,8 @@ package quangnam.com.sample.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
 
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import quangnam.com.sample.di.PerActivity;
  * Project Sample
  */
 
-public class MvpActivity extends BaseActivity {
+public class MvpActivity extends BaseActivity implements IBaseView {
 
     @Inject
     @ApplicationContext
@@ -36,8 +36,38 @@ public class MvpActivity extends BaseActivity {
     Context mActivityContext;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+    }
+
+    @Override
+    public void showLoading() {
+        //TODO impelement
+    }
+
+    @Override
+    public void hideLoading() {
+        //TODO implement
+    }
+
+    @Override
+    public void onError(@StringRes int resID) {
+        //TODO implement
+    }
+
+    @Override
+    public void onError(String message) {
+        //TODO implement
+    }
+
+    @Override
+    public void onErrorCode(int errorCode) {
+        //TODO implement
+    }
+
+    @Override
+    public void hideKeyboard() {
+        //TODO implement
     }
 }

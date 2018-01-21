@@ -1,10 +1,13 @@
 package quangnam.com.sample.ui.activity.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -35,11 +38,19 @@ public class TestActivity extends MvpActivity implements ITestActivity.IView,
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.root_container, fragmentA, "A")
                 .commit();
+
+        ButterKnife.bind(this);
     }
 
     // Use if Fragment need DI only
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return mFragmentAndroidInjector;
+    }
+
+    @OnClick(R.id.btn_viewpager_test)
+    void openViewPagerPage() {
+        Intent intent = new Intent(this, ViewPagerTestActivity.class);
+        startActivity(intent);
     }
 }

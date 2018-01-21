@@ -32,6 +32,9 @@ allprojects {
         rxJavaVersion = '2.1.5'
         rxAndroidVersion = '2.0.1'
 
+        // ButterKnife
+        butterKnifeVersion = '8.8.1'
+
         // Dagger
         daggerVersion = '2.13'  // 2.12
     }

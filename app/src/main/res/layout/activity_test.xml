@@ -8,4 +8,10 @@
     android:layout_height="match_parent"
     tools:context="quangnam.com.sample.ui.activity.test.TestActivity">
 
+    <Button
+        android:id="@+id/btn_viewpager_test"
+        android:text="Go to viewPager activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </android.support.constraint.ConstraintLayout>

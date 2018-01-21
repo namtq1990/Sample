@@ -32,14 +32,21 @@ dependencies {
     // RxJava
     compile "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
 
+    // ButterKnife
+    compile 'com.jakewharton:butterknife:' + project.butterKnifeVersion
+    annotationProcessor 'com.jakewharton:butterknife-compiler:' + project.butterKnifeVersion
+
     // Dagger
     compile "com.google.dagger:dagger:$project.daggerVersion"
     compile "com.google.dagger:dagger-android-support:$project.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
 
+    //
+
     // Google support
     compile "com.android.support:appcompat-v7:$project.appcompatVersion"
     compile "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }

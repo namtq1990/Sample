@@ -23,12 +23,12 @@ public abstract class BaseActivityModule {
     @Binds
     @ActivityContext
     @PerActivity
-    abstract Context activityContext(Activity activity);
+    abstract Context activityContext( Activity activity);
 
     @Provides
     @ActivityFragmentManager
     @PerActivity
-    static FragmentManager provideFragmentManager(Activity activity) {
+    static FragmentManager provideFragmentManager( Activity activity) {
         return ((BaseActivity) activity).getSupportFragmentManager();
     }
 }
