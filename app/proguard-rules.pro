@@ -32,6 +32,20 @@
     static ** CREATOR;
 }
 
+# Explicitly preserve all serialization members. The Serializable interface
+# is only a marker interface, so it wouldn't save them.
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+    public void set*(***);
+    public *** get*();
+    <fields>;
+}
+
 -keepclassmembers class **.R$* {
     public static <fields>;
 }
@@ -46,7 +60,8 @@
       public <init>(android.content.Context);
       public <init>(android.content.Context, android.util.AttributeSet);
       public <init>(android.content.Context, android.util.AttributeSet, int);
-      public void set*(...);
+      void set*(...);
+      *** get*();
 }
 
 -keepclasseswithmembers class * {
@@ -62,7 +77,13 @@
     public void *(android.view.MenuItem);
 }
 
+## --------------- For native methods ---------------------
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
 # android support
+-keep class android.support.** { *;}
 -keep class android.support.v4.** { *;}
 -keep interface android.support.v4.** { *;}
 -keep class android.support.v7.** { *;}
@@ -73,8 +94,13 @@
 -keep interface android.support.design.** { *;}
 -keep public class android.support.design.R$* { *;}
 
+# ConstraintLayout
+-keep class android.support.constraint.** { *;}
+-keep interface android.support.constraint.** { *;}
+-keep public class android.support.constraint.R$* { *;}
+
 #BuildConfig
--keep class com.tqnam.filemanager.BuildConfig { *;}
+-keep class *.BuildConfig { *;}
 
 #debugable
 -keepattributes SourceFile,LineNumberTable
