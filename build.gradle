@@ -32,6 +32,10 @@ allprojects {
         rxJavaVersion = '2.1.5'
         rxAndroidVersion = '2.0.1'
 
+        // Retrofit
+        retrofitVersion = '2.1.0'
+        okhttpLoggerVersion = '3.3.1'
+
         // ButterKnife
         butterKnifeVersion = '8.8.1'
 

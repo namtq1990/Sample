@@ -15,6 +15,7 @@ import quangnam.com.sample.R;
 import quangnam.com.sample.base.MvpActivity;
 import quangnam.com.sample.di.PerActivity;
 import quangnam.com.sample.ui.test.fragment.TestFragment;
+import quangnam.com.sample.util.Navigator;
 
 public class TestActivity extends MvpActivity implements ITestActivity.IView,
         HasSupportFragmentInjector  // Use if fragment need DI only
@@ -50,7 +51,6 @@ public class TestActivity extends MvpActivity implements ITestActivity.IView,
 
     @OnClick(R.id.btn_viewpager_test)
     void openViewPagerPage() {
-        Intent intent = new Intent(this, ViewPagerTestActivity.class);
-        startActivity(intent);
+        Navigator.navigateViewPagerActivity(this);
     }
 }

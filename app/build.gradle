@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+// Store keystore
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -13,11 +18,20 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        release {
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+        }
+    }
 }
+
 configurations.all {
     resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
 }
@@ -42,11 +56,17 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
 
-    //
+    // Retrofit
+    compile "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$project.okhttpLoggerVersion"
 
     // Google support
     compile "com.android.support:appcompat-v7:$project.appcompatVersion"
     compile "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
+    // Multidex
+    compile 'com.android.support:multidex:' + project.multidexVersion
 }
