@@ -32,8 +32,8 @@ public abstract class TestActivityModule {
 
     @Provides
     @PerActivity
-    static ITestActivity.IPresenter provideTestPresenter(ITestActivity.IView view) {
-        return new TestPresenter();
+    static ITestActivity.IPresenter provideTestPresenter(TestPresenter presenter) {
+        return presenter;
     }
 
     /**

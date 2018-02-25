@@ -34,6 +34,8 @@
  There are many fragment type to be extended, ex: BaseFragment, BaseDialog, ... If fragment
  use dagger, it has to be extended MvpFragment.
 
+ - Activity or Fragment has to attach and detach Presenter (if use MVP)
+
  - Most important member in Activity to use:
     + Application context: mContext
     + Activity context: mActivityContext

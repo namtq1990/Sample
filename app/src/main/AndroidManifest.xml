@@ -2,6 +2,9 @@
 <manifest package="quangnam.com.sample"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--Retrofit, internet permission-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Application"
         android:allowBackup="true"

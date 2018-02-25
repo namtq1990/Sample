@@ -14,7 +14,7 @@ public interface ITestActivity {
 
     }
 
-    interface IPresenter extends IBasePresenter {
-
+    interface IPresenter extends IBasePresenter<IView> {
+        void getTestingData();
     }
 }

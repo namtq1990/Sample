@@ -17,9 +17,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+//            minifyEnabled false
+//            debuggable true
+            buildConfigField("String", "BASE_URL", "\"https://dog.ceo/\"")
+            buildConfigField("String", "API_TOKEN", "\"Token\"")
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField("String", "BASE_URL", "\"https://dog.ceo/\"")
+            buildConfigField("String", "API_TOKEN", "\"Token\"")
         }
     }
     signingConfigs {
@@ -60,6 +69,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$project.okhttpLoggerVersion"
+    compile 'com.squareup.retrofit2:adapter-rxjava2:' + project.retrofitVersion
 
     // Google support
     compile "com.android.support:appcompat-v7:$project.appcompatVersion"
