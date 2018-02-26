@@ -2,7 +2,7 @@ package quangnam.com.sample.data.pref;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.support.v7.preference.PreferenceManager;
 
 import javax.inject.Inject;
 
@@ -19,6 +19,6 @@ public class PrefHelper implements IPrefHelper {
 
     @Inject
     public PrefHelper(@ApplicationContext  Context context) {
-        this.mPref = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(context);
+        this.mPref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 }
