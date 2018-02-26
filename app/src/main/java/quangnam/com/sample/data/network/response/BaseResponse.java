@@ -1,5 +1,7 @@
 package quangnam.com.sample.data.network.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import quangnam.com.sample.data.network.BaseApiModel;
 
 /**
@@ -8,4 +10,5 @@ import quangnam.com.sample.data.network.BaseApiModel;
  */
 
 public class BaseResponse extends BaseApiModel {
+
 }

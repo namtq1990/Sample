@@ -41,6 +41,16 @@ public class TestActivity extends MvpActivity implements ITestActivity.IView,
                 .commit();
 
         ButterKnife.bind(this);
+        mPresenter.onAttach(this);
+
+        mPresenter.getTestingData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mPresenter.onDetach();
     }
 
     // Use if Fragment need DI only

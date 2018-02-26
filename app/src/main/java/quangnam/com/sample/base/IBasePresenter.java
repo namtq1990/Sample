@@ -5,5 +5,9 @@ package quangnam.com.sample.base;
  * Project Sample
  */
 
-public interface IBasePresenter {
+public interface IBasePresenter<V extends IBaseView> {
+
+    void onAttach(V view);
+    void onDetach();
+    boolean isViewAttached();
 }

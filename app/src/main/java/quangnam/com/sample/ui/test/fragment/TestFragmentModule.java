@@ -29,8 +29,8 @@ public class TestFragmentModule {
 
     @Provides
     @PerFragment
-    ITestFragment.IPresenter providePresenter(ITestFragment.IView view) {
-        return new TestPresenter();
+    ITestFragment.IPresenter providePresenter(TestPresenter presenter) {
+        return presenter;
     }
 
 }

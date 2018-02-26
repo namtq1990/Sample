@@ -2,13 +2,16 @@ package quangnam.com.sample.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import quangnam.com.base.exception.BaseException;
 import quangnam.com.sample.di.ActivityContext;
 import quangnam.com.sample.di.ActivityFragmentManager;
 import quangnam.com.sample.di.ApplicationContext;
@@ -49,6 +52,11 @@ public class MvpActivity extends BaseActivity implements IBaseView {
     @Override
     public void hideLoading() {
         //TODO implement
+    }
+
+    @Override
+    public void onError(@NonNull BaseException exception) {
+        Toast.makeText(this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

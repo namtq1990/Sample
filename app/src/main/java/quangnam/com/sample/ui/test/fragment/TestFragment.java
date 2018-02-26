@@ -1,5 +1,6 @@
 package quangnam.com.sample.ui.test.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import dagger.android.support.AndroidSupportInjection;
 import quangnam.com.sample.base.MvpFragment;
 
 /**
@@ -45,5 +47,18 @@ public class TestFragment extends MvpFragment implements ITestFragment.IView {
         rootView.setText(getLabel());
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        AndroidSupportInjection.inject(this);
+        mPresenter.onAttach(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mPresenter.onDetach();
     }
 }
