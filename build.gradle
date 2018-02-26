@@ -21,7 +21,7 @@ allprojects {
         // Google support version
         minSdkVersion = 14
         targetSdkVersion = 24
-        compileSdkVersion = 26
+        compileSdkVersion = 27
         buildToolsVersion = '26.0.1'
         constraintLayoutVersion = '1.0.2'
         appcompatVersion = '26+'
