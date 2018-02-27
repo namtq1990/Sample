@@ -36,6 +36,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.RemoteViews;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import quangnam.com.base.service.FloatingViewService;
 import quangnam.com.base.utils.Log;
 
@@ -61,6 +63,13 @@ public class Application extends BaseApplication {
 
         if (Config.DEBUG) {
             showDebugNotification();
+
+            // Initialize leak canary
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                return;
+            }
+            LeakCanary.install(this);
+            //
         }
     }
 
