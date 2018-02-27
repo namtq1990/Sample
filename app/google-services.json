@@ -10,7 +10,8 @@
       "client_info": {
         "mobilesdk_app_id": "1:194942844382:android:c6fc31d5b6119e7e",
         "android_client_info": {
-          "package_name": "dev.uketoru.android"
+//          "package_name": "dev.uketoru.android"
+          "package_name": "quangnam.com.sample.debug"
         }
       },
       "oauth_client": [
