@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "194942844382",
+    "firebase_url": "https://uketoru-95ba0.firebaseio.com",
+    "project_id": "uketoru-95ba0",
+    "storage_bucket": "uketoru-95ba0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194942844382:android:c6fc31d5b6119e7e",
+        "android_client_info": {
+          "package_name": "dev.uketoru.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194942844382-4pgp6d8n6ssvkd5iei55lpddbvf05in5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYNhCXc9VVpDadE34RwHZVLPdO8VCscmc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -20,6 +20,7 @@ android {
         debug {
 //            minifyEnabled false
 //            debuggable true
+            applicationIdSuffix ".debug"
             buildConfigField("String", "BASE_URL", "\"https://dog.ceo/\"")
             buildConfigField("String", "API_TOKEN", "\"Token\"")
         }
@@ -29,6 +30,10 @@ android {
 
             buildConfigField("String", "BASE_URL", "\"https://dog.ceo/\"")
             buildConfigField("String", "API_TOKEN", "\"Token\"")
+        }
+        staging {
+            initWith debug
+            applicationIdSuffix ".releaseStaging"
         }
     }
     signingConfigs {
@@ -78,4 +83,7 @@ dependencies {
 
     // Multidex
     compile 'com.android.support:multidex:' + project.multidexVersion
+
+    // Firebase
+    compile 'com.google.firebase:firebase-messaging:' + firebaseVersion
 }
