@@ -1,8 +1,12 @@
 package quangnam.com.sample.base.network;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -12,6 +16,8 @@ import io.reactivex.schedulers.Schedulers;
 import quangnam.com.base.exception.BaseException;
 import quangnam.com.base.utils.Log;
 import quangnam.com.sample.data.exception.ApiException;
+import quangnam.com.sample.di.ApplicationContext;
+import quangnam.com.sample.util.AppUtils;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.HttpException;
@@ -26,32 +32,33 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RetrofitCallAdapterFactory extends CallAdapter.Factory {
 
     private final RxJava2CallAdapterFactory mOriginal;
+    private final Context mContext;
 
-    private RetrofitCallAdapterFactory() {
+    @Inject
+    RetrofitCallAdapterFactory(@ApplicationContext Context context) {
         mOriginal = RxJava2CallAdapterFactory.create();
-    }
-
-    public static RetrofitCallAdapterFactory create() {
-        return new RetrofitCallAdapterFactory();
+        mContext = context;
     }
 
     @Override
     public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
-        return new RxCallAdapterWrapper(retrofit, mOriginal.get(returnType, annotations, retrofit));
+        return new RxCallAdapterWrapper(retrofit, mOriginal.get(returnType, annotations, retrofit), mContext);
     }
 
     private static class RxCallAdapterWrapper<R> implements CallAdapter<R, Object> {
         private final Retrofit mRetrofit;
         private final CallAdapter<R, Object> mWrapped;
+        private final Context mContext;
 
 //        RxCallAdapterWrapper(CallAdapter<R, Object> wrapped) {
 //            mWrapped = wrapped;
 //        }
 
 
-        public RxCallAdapterWrapper(Retrofit retrofit, CallAdapter<R, Object> wrapped) {
+        RxCallAdapterWrapper(Retrofit retrofit, CallAdapter<R, Object> wrapped, Context context) {
             mRetrofit = retrofit;
             mWrapped = wrapped;
+            mContext = context;
         }
 
         @Override
@@ -78,21 +85,22 @@ public class RetrofitCallAdapterFactory extends CallAdapter.Factory {
                 Log.e("Network error happened. Check server status.");
                 throwable.printStackTrace();
 
-                return new BaseException(BaseException.RK_NETWORK_ERROR, exception.response().message(), exception);
+                return AppUtils.addLocalizedException(mContext, new BaseException(BaseException.RK_NETWORK_ERROR, exception.response().message(), exception));
             }
 
             if (throwable instanceof IOException) {
                 Log.e("Network error happened. Check network connection.");
 
-                return new BaseException(BaseException.RK_NETWORK_ERROR, throwable.getMessage(), throwable);
+                return AppUtils.addLocalizedException(mContext, new BaseException(BaseException.RK_NETWORK_ERROR, throwable.getMessage(), throwable));
             }
 
             if (throwable instanceof ApiException) {
                 Log.e("Api Exception with code: %d, error: %s", ((ApiException) throwable).getErrorCode(), throwable.getMessage());
-                return (BaseException) throwable;
+                return AppUtils.addLocalizedException(mContext, (BaseException) throwable);
             }
 
-            return new BaseException(BaseException.RK_UNKNOWN, throwable.getMessage(), throwable);
+            return new BaseException(BaseException.RK_UNKNOWN, throwable.getMessage(), throwable)
+                    .setLocalizedMessage(mContext.getString(quangnam.com.sample.R.string.error_uknown));
         }
     }
 }

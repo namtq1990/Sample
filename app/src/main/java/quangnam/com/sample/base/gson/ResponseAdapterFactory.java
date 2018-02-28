@@ -11,9 +11,12 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import quangnam.com.sample.data.exception.ApiException;
 import quangnam.com.sample.data.network.response.BaseErrorResponse;
 import quangnam.com.sample.data.network.response.ResponseWrapper;
+import quangnam.com.sample.util.AppUtils;
 import quangnam.com.sample.util.Constant;
 
 /**
@@ -23,6 +26,12 @@ import quangnam.com.sample.util.Constant;
 
 public class ResponseAdapterFactory implements TypeAdapterFactory {
 
+    private final AppUtils mAppUtil;
+
+    @Inject
+    ResponseAdapterFactory(AppUtils appUtil) {
+        mAppUtil = appUtil;
+    }
 
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
@@ -51,8 +60,7 @@ public class ResponseAdapterFactory implements TypeAdapterFactory {
                         String status = object.get(ResponseWrapper.STATUS).getAsString();
                         if (!status.equalsIgnoreCase(Constant.ResponseStatus.success)) {
                             ResponseWrapper<BaseErrorResponse> response = errorAdapter.fromJsonTree(element);
-                            throw new ApiException(Integer.parseInt(response.getCode()),
-                                    response.getObject().getValue());
+                            throw mAppUtil.addLocalizedException(new ApiException(Integer.parseInt(response.getCode()), response.getObject().getValue()));
                         }
                     }
                 }

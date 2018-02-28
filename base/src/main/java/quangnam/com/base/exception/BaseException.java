@@ -35,6 +35,7 @@ public class BaseException extends RuntimeException {
 
     private int mErrCode;
     private String mMessage;
+    private String mLocalizedMessage;
 
     public BaseException(String message) {
         this(RK_UNKNOWN, message);
@@ -66,6 +67,19 @@ public class BaseException extends RuntimeException {
 
     public void setMessage(String message) {
         mMessage = message;
+    }
+
+    @Override
+    public String getLocalizedMessage() {
+        if (mLocalizedMessage != null)
+            return mLocalizedMessage;
+
+        return getMessage();
+    }
+
+    public BaseException setLocalizedMessage(String localizedMessage) {
+        mLocalizedMessage = localizedMessage;
+        return this;
     }
 
     @Override

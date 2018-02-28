@@ -34,8 +34,8 @@ public class NetModule {
 
     @Provides
     @Singleton
-    CallAdapter.Factory provideCallAdapter() {
-        return RetrofitCallAdapterFactory.create();
+    CallAdapter.Factory provideCallAdapter(RetrofitCallAdapterFactory factory) {
+        return factory;
     }
 
     @Provides

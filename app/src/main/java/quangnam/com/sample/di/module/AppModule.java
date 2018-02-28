@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapterFactory;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -44,10 +46,16 @@ public class AppModule {
     }
 
     @Provides
+    @Named("responseAdapter")
+    TypeAdapterFactory provideResponseAdapterFactory(ResponseAdapterFactory factory) {
+        return factory;
+    }
+
+    @Provides
     @Singleton
-    Gson provideGSON() {
+    Gson provideGSON(@Named("responseAdapter") TypeAdapterFactory factory) {
         GsonBuilder builder = new GsonBuilder()
-                .registerTypeAdapterFactory(new ResponseAdapterFactory())
+                .registerTypeAdapterFactory(factory)
                 .registerTypeHierarchyAdapter(StringResponse.class, new StringResponseParser());
 
         return builder.create();

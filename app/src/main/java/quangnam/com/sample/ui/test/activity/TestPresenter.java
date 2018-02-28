@@ -4,15 +4,13 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 import quangnam.com.base.exception.BaseException;
 import quangnam.com.base.utils.Log;
 import quangnam.com.sample.base.BasePresenter;
-import quangnam.com.sample.data.DataManager;
 import quangnam.com.sample.base.rxjava.BaseCompleteAction;
 import quangnam.com.sample.base.rxjava.BaseErrorAction;
 import quangnam.com.sample.base.rxjava.BaseSuccessAction;
+import quangnam.com.sample.data.DataManager;
 import quangnam.com.sample.data.network.response.ResponseWrapper;
 import quangnam.com.sample.data.network.response.test.DogResponse;
 

@@ -1,7 +1,5 @@
 package quangnam.com.sample.data.network.response;
 
-import com.google.gson.annotations.SerializedName;
-
 import quangnam.com.sample.data.network.BaseApiModel;
 
 /**
