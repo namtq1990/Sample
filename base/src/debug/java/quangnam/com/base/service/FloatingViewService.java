@@ -53,6 +53,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -62,12 +63,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import quangnam.com.base.Application;
 import quangnam.com.base.R;
 import quangnam.com.base.activity.PermissionDebugActivity;
 import quangnam.com.base.exception.BaseException;
+import quangnam.com.base.model.Command;
 import quangnam.com.base.utils.Log;
 import quangnam.com.base.utils.TimeTracker;
 
@@ -87,7 +94,8 @@ public class FloatingViewService extends Service {
             R.id.btn_up,
             R.id.btn_down,
             R.id.btn_exception,
-            R.id.btn_screenshot
+            R.id.btn_screenshot,
+            R.id.btn_command
     };
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private WindowManager mWindowManager;
@@ -97,6 +105,8 @@ public class FloatingViewService extends Service {
     private View mCollapsedView;
     private TextView mTvLog;
     private CharSequence mLog;
+    private EditText mEdCommand;
+
     private View.OnClickListener mMenuOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -115,9 +125,13 @@ public class FloatingViewService extends Service {
                 throw new BaseException(BaseException.RK_UNKNOWN, "Test");
             } else if (id == R.id.btn_screenshot) {
                 takeScreenshot();
+            } else if (id == R.id.btn_command) {
+                executeCommand();
             }
         }
     };
+
+    private Map<String, Command> mCommands = new HashMap<>();
 
     @Override
     public void onCreate() {
@@ -291,6 +305,9 @@ public class FloatingViewService extends Service {
                 return false;
             }
         });
+
+        mEdCommand = mExpandedView.findViewById(R.id.ed_command);
+        initCommand();
     }
 
     public void toggle() {
@@ -435,5 +452,83 @@ public class FloatingViewService extends Service {
             // Several error may come out with file handling or OOM
             e.printStackTrace();
         }
+    }
+
+    public void executeCommand() {
+        String line = mEdCommand.getText().toString();
+        ArrayList<String> cmd = new ArrayList<>(Arrays.asList(line.split(" ")));
+
+        if (cmd.size() < 1)
+            return;
+
+        String name = cmd.get(0);
+        Command command = mCommands.get(name);
+
+        if (command == null) {
+            executeHelpCommand();
+            return;
+        }
+
+        command.execute(line);
+    }
+
+    public void executeHelpCommand() {
+        StringBuilder text = new StringBuilder("List of commands to execute:\n");
+        String cmdFormat = "%s: %s\n";
+
+        mTvLog.setText("");
+
+        for (Command cmd: mCommands.values()) {
+            text.append(String.format(cmdFormat, cmd.name, cmd.helper));
+        }
+
+        text.append("-------------------------------------");
+
+        mTvLog.setText(text.toString());
+    }
+
+    public void initCommand() {
+
+        // Help command
+        final Command helpCmd = new Command();
+        helpCmd.name = "help";
+        helpCmd.helper = "All command list";
+        helpCmd.executable = new Command.CommandExecutable() {
+            @Override
+            public void execute(List<String> params) {
+                executeHelpCommand();
+            }
+        };
+
+        mCommands.put("help", helpCmd);
+
+        // Log command
+        Command command = new Command();
+        command.name = "log";
+        command.helper = "log // Show app log";
+
+        command.executable = new Command.CommandExecutable() {
+
+            @Override
+            public void execute(List<String> params) {
+                helpCmd.execute("log");
+                loadLog();
+            }
+        };
+
+        mCommands.put("log", command);
+
+        // Change url
+        command = new Command();
+        command.name = "changeUrl";
+        command.helper = "changeUrl URL // Change api base url";
+        command.executable = new Command.CommandExecutable() {
+            @Override
+            public void execute(List<String> params) {
+                Log.d("Change url to %s", params.get(0));
+            }
+        };
+        mCommands.put("changeUrl", command);
+
     }
 }
