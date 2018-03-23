@@ -43,7 +43,7 @@ public class AlertDialogFragment extends BaseDialog {
         }
     };
 
-    private static void prepareArgument(final Bundle args,
+    protected static void prepareArgument(final Bundle args,
                                         final int action,
                                         final String title,
                                         final String message,

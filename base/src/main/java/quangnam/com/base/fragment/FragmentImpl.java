@@ -86,7 +86,7 @@ class FragmentImpl implements IBaseFragment {
 
     @Override
     public void onDestroy() {
-        mDisposable.dispose();
+        mDisposable.clear();
         Log.d("Fragment %s onDestroy", mHost);
     }
 

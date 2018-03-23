@@ -121,7 +121,7 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
         if (priority == -1) {
             mRequestStack.push(fragment);
         } else {
-            removeFocusRequest(fragment);
+            mRequestStack.remove(fragment);
             mRequestStack.push(fragment);
         }
 

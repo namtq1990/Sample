@@ -25,6 +25,11 @@ android {
         }
     }
     sourceSets { debug { java.srcDirs = ['src/debug/java', 'src/debug/java/'] } }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 // Leak Canary: Ensure the no-op dependency is always used in JVM tests.
