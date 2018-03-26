@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="app_leftDrawable" format="color|reference"/>
+    <attr name="app_rightDrawable" format="color|reference"/>
+    <attr name="app_topDrawable" format="color|reference"/>
+    <attr name="app_bottomDrawable" format="color|reference"/>
+
+    <declare-styleable name="AppTextView">
+        <attr name="app_leftDrawable" />
+        <attr name="app_rightDrawable" />
+        <attr name="app_topDrawable" />
+        <attr name="app_bottomDrawable" />
+    </declare-styleable>
+    <declare-styleable name="AppCheckedTextView">
+        <attr name="app_leftDrawable" />
+        <attr name="app_rightDrawable" />
+        <attr name="app_topDrawable" />
+        <attr name="app_bottomDrawable" />
+    </declare-styleable>
+    <declare-styleable name="AppAutoCompleteTextView">
+        <attr name="app_leftDrawable" />
+        <attr name="app_rightDrawable" />
+        <attr name="app_topDrawable" />
+        <attr name="app_bottomDrawable" />
+    </declare-styleable>
+    <declare-styleable name="AppButton">
+        <attr name="app_leftDrawable" />
+        <attr name="app_rightDrawable" />
+        <attr name="app_topDrawable" />
+        <attr name="app_bottomDrawable" />
+    </declare-styleable>
+</resources>
