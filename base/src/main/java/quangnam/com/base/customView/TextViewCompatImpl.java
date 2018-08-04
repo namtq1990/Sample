@@ -9,11 +9,6 @@ import android.widget.TextView;
 
 import quangnam.com.base.R;
 
-/**
- * Created by quangnam on 3/24/18.
- * Project Sample
- */
-
 public class TextViewCompatImpl implements ITextViewCompat {
 
     private Drawable mDrawableLeft;

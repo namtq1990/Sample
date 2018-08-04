@@ -46,11 +46,13 @@ class BaseApplication extends Application implements Application.ActivityLifecyc
 
     private WeakReference<Activity> mCurActivity;
     private Handler mHandler;
+    private boolean mIsBackground;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        mIsBackground = false;
         mHandler = new Handler();
         Log.init(this);
         registerActivityLifecycleCallbacks(this);
@@ -65,6 +67,7 @@ class BaseApplication extends Application implements Application.ActivityLifecyc
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         mCurActivity = new WeakReference<>(activity);
+        mIsBackground = false;
     }
 
     @Override
@@ -75,14 +78,20 @@ class BaseApplication extends Application implements Application.ActivityLifecyc
     @Override
     public void onActivityResumed(Activity activity) {
         mCurActivity = new WeakReference<>(activity);
+        mIsBackground = false;
     }
 
     @Override
-    public void onActivityPaused(Activity activity) {
-    }
+    public void onActivityPaused(Activity activity) {}
 
     @Override
     public void onActivityStopped(Activity activity) {
+        if (activity == mCurActivity.get()) {
+            // This is truly activity has paused. So put it's coming to background
+            mIsBackground = true;
+        } else {
+            mIsBackground = false;
+        }
     }
 
     @Override
@@ -92,6 +101,30 @@ class BaseApplication extends Application implements Application.ActivityLifecyc
     @Override
     public void onActivityDestroyed(Activity activity) {
     }
+
+    /**
+     * Return state if activity is start from background. This method is only correct if call before
+     * {@link Activity#onResume()}
+     */
+    @SuppressWarnings("unused")
+    public boolean isAppComeFromBackground() {
+        return mIsBackground;
+    }
+
+    //    public boolean isAppInForeground() {
+    //        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    //        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+    //        if (appProcesses == null) {
+    //            return false;
+    //        }
+    //        final String packageName = getPackageName();
+    //        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+    //            if (appProcess.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
+    //                return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
 
     @SuppressWarnings("unused")
     public Activity getCurActivity() {
@@ -119,3 +152,4 @@ class BaseApplication extends Application implements Application.ActivityLifecyc
         setLanguage(this, language);
     }
 }
+

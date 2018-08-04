@@ -5,11 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 
-/**
- * Created by quangnam on 3/24/18.
- * Project Sample
- */
-
 public class AppButton extends AppCompatButton implements ITextViewCompat {
 
     private ITextViewCompat mTextViewCompatImpl;

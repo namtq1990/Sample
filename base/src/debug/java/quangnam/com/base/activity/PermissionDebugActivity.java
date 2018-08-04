@@ -24,11 +24,15 @@
 
 package quangnam.com.base.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -40,17 +44,23 @@ import quangnam.com.base.service.FloatingViewService;
  */
 public class PermissionDebugActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION_OVERLAY = 1;
+    private static final int REQUEST_PERMISSION_RW = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_permission_debug);
+        //        setContentView(R.layout.activity_permission_debug);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && !Settings.canDrawOverlays(this)) {
             Intent i = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(i, REQUEST_PERMISSION_OVERLAY);
+        } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSION_RW);
         } else {
             startDebugService();
         }
@@ -76,6 +86,22 @@ public class PermissionDebugActivity extends AppCompatActivity {
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION_RW) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                    && Settings.canDrawOverlays(this)) {
+                startDebugService();
+            } else {
+                Toast.makeText(PermissionDebugActivity.this,
+                        "Permission doesn't allowed.",
+                        Toast.LENGTH_SHORT)
+                        .show();
+                finish();
+            }
         }
     }
 }

@@ -25,6 +25,8 @@
 package quangnam.com.base;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -47,6 +49,7 @@ import quangnam.com.base.utils.Log;
  */
 public class Application extends BaseApplication {
     public static final int NOTIFICATION_ID = 1000;
+    public static final String NOTIFICATION_DEBUG_CHANNEL = "debug_channel";
     public static final int REQUEST_CODE_DEBUG_MENU = 1;
     public static final int REQUEST_CODE_SETTING = 2;
     public static final int REQUEST_CODE_APP = 3;
@@ -62,6 +65,7 @@ public class Application extends BaseApplication {
         Log.d("Running in debug mode");
 
         if (Config.DEBUG) {
+            Config.loadConfig();
             showDebugNotification();
 
             // Initialize leak canary
@@ -80,38 +84,36 @@ public class Application extends BaseApplication {
         if (Config.DEBUG) {
             Intent appIntent;
             appIntent = new Intent(this, activity.getClass());
-//            appIntent.setAction(Intent.ACTION_MAIN);
-//            appIntent.addCategory(Intent.CATEGORY_LAUNCHER);
             appIntent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-//            stackBuilder.addParentStack(activity.getClass());
-//            stackBuilder.addNextIntent(appIntent);
+            //            appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            //            stackBuilder.addParentStack(activity.getClass());
+            //            stackBuilder.addNextIntent(appIntent);
             PendingIntent pendingIntent;
             //            pendingIntent = stackBuilder.getPendingIntent(REQUEST_CODE_APP, PendingIntent.FLAG_UPDATE_CURRENT);
 
             pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE_APP, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             // To resume task, see http://stackoverflow.com/a/9787442/1907469
-//            Intent nIntent = new Intent();
-//
-//            final ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-//
-//            final List<RecentTaskInfo> recentTaskInfos = am.getRecentTasks(1024,0);
-//            String myPkgNm = getPackageName();
-//
-//            if (!recentTaskInfos.isEmpty()) {
-//                RecentTaskInfo recentTaskInfo;
-//                final int size = recentTaskInfo.size();
-//                for (int i=0;i<size;i++) {
-//                    recentTaskInfo = recentTaskInfos.get(i);
-//                    if (recentTaskInfo.baseIntent.getComponent().getPackageName().equals(myPkgNm)) {
-//                        nIntent = recentTaskInfo.baseIntent;
-//                        nIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    }
-//                }
-//            }
-//            PendingIntent pi = PendingIntent.getActivity(this, 0, nIntent, 0);
+            //            Intent nIntent = new Intent();
+            //
+            //            final ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            //
+            //            final List<RecentTaskInfo> recentTaskInfos = am.getRecentTasks(1024,0);
+            //            String myPkgNm = getPackageName();
+            //
+            //            if (!recentTaskInfos.isEmpty()) {
+            //                RecentTaskInfo recentTaskInfo;
+            //                final int size = recentTaskInfo.size();
+            //                for (int i=0;i<size;i++) {
+            //                    recentTaskInfo = recentTaskInfos.get(i);
+            //                    if (recentTaskInfo.baseIntent.getComponent().getPackageName().equals(myPkgNm)) {
+            //                        nIntent = recentTaskInfo.baseIntent;
+            //                        nIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //                    }
+            //                }
+            //            }
+            //            PendingIntent pi = PendingIntent.getActivity(this, 0, nIntent, 0);
             //
 
             // Add cur activity to notification setting
@@ -130,7 +132,16 @@ public class Application extends BaseApplication {
         mContent.setOnClickPendingIntent(R.id.btn_open_debug, PendingIntent.getService(this, REQUEST_CODE_DEBUG_MENU, serviceIntent, 0));
         mContent.setOnClickPendingIntent(R.id.btn_setting, PendingIntent.getActivity(this, REQUEST_CODE_SETTING, settingIntent, 0));
 
-        mBuilder = new NotificationCompat.Builder(this)
+        NotificationManager notificationManager = ((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
+        if (Build.VERSION.SDK_INT >= 26 && notificationManager != null) {
+            NotificationChannel channel = notificationManager.getNotificationChannel(NOTIFICATION_DEBUG_CHANNEL);
+            if (channel == null) {
+                channel = new NotificationChannel(NOTIFICATION_DEBUG_CHANNEL, NOTIFICATION_DEBUG_CHANNEL, NotificationManager.IMPORTANCE_HIGH);
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+
+        mBuilder = new NotificationCompat.Builder(this, NOTIFICATION_DEBUG_CHANNEL)
                 .setSmallIcon(R.drawable.rect_round_20dp_selector)
                 .setContentTitle(getPackageName())
                 .setContentText(getPackageName() + " is Debugging")

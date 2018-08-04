@@ -29,4 +29,10 @@
         <attr name="app_topDrawable" />
         <attr name="app_bottomDrawable" />
     </declare-styleable>
+    <declare-styleable name="AppEditText">
+        <attr name="app_leftDrawable" />
+        <attr name="app_rightDrawable" />
+        <attr name="app_topDrawable" />
+        <attr name="app_bottomDrawable" />
+    </declare-styleable>
 </resources>

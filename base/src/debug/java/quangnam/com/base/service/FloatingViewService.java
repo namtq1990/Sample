@@ -24,6 +24,7 @@
 
 package quangnam.com.base.service;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Service;
 import android.content.ClipData;
@@ -41,6 +42,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -69,8 +71,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import quangnam.com.base.Application;
+import quangnam.com.base.Config;
 import quangnam.com.base.R;
 import quangnam.com.base.activity.PermissionDebugActivity;
 import quangnam.com.base.exception.BaseException;
@@ -95,7 +101,8 @@ public class FloatingViewService extends Service {
             R.id.btn_down,
             R.id.btn_exception,
             R.id.btn_screenshot,
-            R.id.btn_command
+            R.id.btn_command,
+            R.id.btn_change_url
     };
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private WindowManager mWindowManager;
@@ -104,7 +111,7 @@ public class FloatingViewService extends Service {
     private View mExpandedView;
     private View mCollapsedView;
     private TextView mTvLog;
-    private CharSequence mLog;
+    private CharSequence mLogBuffer;
     private EditText mEdCommand;
 
     private View.OnClickListener mMenuOnClickListener = new View.OnClickListener() {
@@ -127,6 +134,10 @@ public class FloatingViewService extends Service {
                 takeScreenshot();
             } else if (id == R.id.btn_command) {
                 executeCommand();
+            } else if (id == R.id.btn_change_url) {
+                Command command = mCommands.get("changeUrl");
+                command.execute("changeUrl " + mEdCommand.getText());
+                Toast.makeText(FloatingViewService.this, "Url changed", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -138,7 +149,12 @@ public class FloatingViewService extends Service {
         super.onCreate();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && !Settings.canDrawOverlays(this)) {
+                && (
+                !Settings.canDrawOverlays(this)
+                        || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        )
+                ) {
             Intent i = new Intent(this, PermissionDebugActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
@@ -174,7 +190,7 @@ public class FloatingViewService extends Service {
         mLayoutParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT
         );
@@ -194,20 +210,10 @@ public class FloatingViewService extends Service {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        collapsedIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggle();
-            }
-        });
+        collapsedIcon.setOnClickListener(v -> toggle());
 
         View btnClose = mFloatingView.findViewById(R.id.btn_close);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopSelf();
-            }
-        });
+        btnClose.setOnClickListener(v -> stopSelf());
 
         mExpandedView = mFloatingView.findViewById(R.id.layout_expand);
         mCollapsedView = mFloatingView.findViewById(R.id.layout_collapse);
@@ -264,26 +270,20 @@ public class FloatingViewService extends Service {
             }
         });
 
-        mExpandedView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disable send touch action to #mFloatingView if touch in view expanded
-                return true;
-            }
+        mExpandedView.setOnTouchListener((v, event) -> {
+            // Disable send touch action to #mFloatingView if touch in view expanded
+            return true;
         });
 
-        mFloatingView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mFloatingView.setOnClickListener(v -> {
 
-                if (isExpanded()) {
-                    collapseView();
-                }
+            if (isExpanded()) {
+                collapseView();
             }
         });
 
         mTvLog = mExpandedView.findViewById(R.id.tv_log);
-//        mTvLog.setMovementMethod(new AccelerationMovement(mTvLog));
+        //        mTvLog.setMovementMethod(new AccelerationMovement(mTvLog));
         mTvLog.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -343,7 +343,7 @@ public class FloatingViewService extends Service {
         mWindowManager.updateViewLayout(mFloatingView, mLayoutParams);
         mTvLog.requestFocus();
 
-        refresh();
+        //        refresh();
     }
 
     @Nullable
@@ -353,32 +353,31 @@ public class FloatingViewService extends Service {
     }
 
     public void loadLog() {
-        mLog = new StringBuilder();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    BufferedReader reader = Log.loadLog();
+        mLogBuffer = new StringBuilder();
+        final int[] bufferCount = {0};
+        mTvLog.setText("");
 
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        addLineToLog(line);
-                    }
+        Log.getLogObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(s -> {
+                    bufferCount[0]++;
+                    addLineToLog(s);
 
-
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mTvLog.setText(mLog);
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.run();
+                    return bufferCount[0] >= 30;
+                })
+                .subscribe(s -> {
+                            mTvLog.append(mLogBuffer);
+                            bufferCount[0] = 0;
+                            mLogBuffer = new StringBuffer();
+                        }, throwable -> Log.d("Failed while get log"),
+                        () -> {
+                            if (!TextUtils.isEmpty(mLogBuffer)) {
+                                mTvLog.append(mLogBuffer);
+                                bufferCount[0] = 0;
+                                mLogBuffer = new StringBuffer();
+                            }
+                        });
     }
 
     public void addLineToLog(String line) {
@@ -388,7 +387,7 @@ public class FloatingViewService extends Service {
                 19,
                 Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-        mLog = TextUtils.concat(mLog, text);
+        mLogBuffer = TextUtils.concat(mLogBuffer, text);
     }
 
     public void refresh() {
@@ -478,7 +477,7 @@ public class FloatingViewService extends Service {
 
         mTvLog.setText("");
 
-        for (Command cmd: mCommands.values()) {
+        for (Command cmd : mCommands.values()) {
             text.append(String.format(cmdFormat, cmd.name, cmd.helper));
         }
 
@@ -493,12 +492,7 @@ public class FloatingViewService extends Service {
         final Command helpCmd = new Command();
         helpCmd.name = "help";
         helpCmd.helper = "All command list";
-        helpCmd.executable = new Command.CommandExecutable() {
-            @Override
-            public void execute(List<String> params) {
-                executeHelpCommand();
-            }
-        };
+        helpCmd.executable = params -> executeHelpCommand();
 
         mCommands.put("help", helpCmd);
 
@@ -507,13 +501,9 @@ public class FloatingViewService extends Service {
         command.name = "log";
         command.helper = "log // Show app log";
 
-        command.executable = new Command.CommandExecutable() {
-
-            @Override
-            public void execute(List<String> params) {
-                helpCmd.execute("log");
-                loadLog();
-            }
+        command.executable = params -> {
+            helpCmd.execute("log");
+            loadLog();
         };
 
         mCommands.put("log", command);
@@ -522,13 +512,12 @@ public class FloatingViewService extends Service {
         command = new Command();
         command.name = "changeUrl";
         command.helper = "changeUrl URL // Change api base url";
-        command.executable = new Command.CommandExecutable() {
-            @Override
-            public void execute(List<String> params) {
-                Log.d("Change url to %s", params.get(0));
-            }
+        command.executable = params -> {
+            Log.d("Change url to %s", params.get(0));
+            Properties properties = Config.getProperties();
+            properties.setProperty("api_url", params.get(0));
+            Config.saveConfig();
         };
         mCommands.put("changeUrl", command);
-
     }
 }

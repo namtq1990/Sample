@@ -167,6 +167,13 @@
                     android:text="Execute"
                     android:id="@+id/btn_command"/>
 
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_change_url"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:text="CHANGE URL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
             </android.support.v7.widget.GridLayout>
         </HorizontalScrollView>
 

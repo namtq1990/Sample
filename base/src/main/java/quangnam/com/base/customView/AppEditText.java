@@ -2,22 +2,22 @@ package quangnam.com.base.customView;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 
-public class AppTextView extends AppCompatTextView implements ITextViewCompat {
+public class AppEditText extends AppCompatEditText implements ITextViewCompat {
 
     private ITextViewCompat mViewImpl;
 
-    public AppTextView(Context context) {
+    public AppEditText(Context context) {
         this(context, null);
     }
 
-    public AppTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.textViewStyle);
+    public AppEditText(Context context, AttributeSet attrs) {
+        this(context, attrs, android.support.v7.appcompat.R.attr.editTextStyle);
     }
 
-    public AppTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AppEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mViewImpl = new TextViewCompatImpl(getContext(), this, attrs);
     }

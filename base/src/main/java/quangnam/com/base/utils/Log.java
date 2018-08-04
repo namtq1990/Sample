@@ -31,7 +31,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
-import quangnam.com.base.BuildConfig;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposables;
+import quangnam.com.base.Config;
 
 /**
  * Created by quangnam on 4/18/16.
@@ -127,7 +129,7 @@ public class Log {
     }
 
     private static boolean isLoggable(int priority) {
-        return BuildConfig.DEBUG;
+        return Config.DEBUG;
     }
 
     private static boolean isLoggable(int priority, String tag) {
@@ -147,5 +149,32 @@ public class Log {
         return new BufferedReader(new InputStreamReader(
                 process.getInputStream()
         ));
+    }
+
+    public static Observable<String> getLogObservable() {
+        return Observable.create(e -> {
+            BufferedReader reader = loadLog();
+            String line;
+
+            e.setDisposable(Disposables.fromRunnable(() -> {
+                try {
+                    Log.d("Try to close Log stream");
+                    reader.close();
+                } catch (IOException e1) {
+                    Log.e("Log stream couldn't be closed");
+                }
+            }));
+
+            while ((line = reader.readLine()) != null) {
+                if (!e.isDisposed()) {
+                    e.onNext(line);
+                } else {
+                    e.onComplete();
+                    return;
+                }
+            }
+
+            e.onComplete();
+        });
     }
 }
