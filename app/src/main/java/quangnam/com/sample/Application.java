@@ -2,6 +2,8 @@ package quangnam.com.sample;
 
 import android.app.Activity;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import dagger.android.DispatchingAndroidInjector;
@@ -21,6 +23,7 @@ public class Application extends quangnam.com.base.Application implements HasAct
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         DaggerAppComponent
                 .builder()
                 .application(this)

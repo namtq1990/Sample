@@ -61,6 +61,11 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:' + project.appcompatVersion
     testCompile 'junit:junit:4.12'
 
+    // Fabric
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
+        transitive = true;
+    }
+
     // Leak Canary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:' + project.leakCanaryVersion
 

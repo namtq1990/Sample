@@ -38,8 +38,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.widget.RemoteViews;
 
+import com.crashlytics.android.Crashlytics;
 import com.squareup.leakcanary.LeakCanary;
 
+import io.fabric.sdk.android.DefaultLogger;
+import io.fabric.sdk.android.Fabric;
 import quangnam.com.base.service.FloatingViewService;
 import quangnam.com.base.utils.Log;
 
@@ -62,8 +65,6 @@ public class Application extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        Log.d("Running in debug mode");
-
         if (Config.DEBUG) {
             Config.loadConfig();
             showDebugNotification();
@@ -74,7 +75,18 @@ public class Application extends BaseApplication {
             }
             LeakCanary.install(this);
             //
+
+            // Install Fabric
+            if (Config.USE_FABRIC) {
+                Fabric.with(new Fabric.Builder(this)
+                        .kits(new Crashlytics())
+//                        .logger(new DefaultLogger(1))
+                        .build()
+                );
+            }
         }
+
+        Log.d("Running in debug mode");
     }
 
     @Override

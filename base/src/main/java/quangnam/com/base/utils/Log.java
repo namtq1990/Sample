@@ -26,9 +26,13 @@ package quangnam.com.base.utils;
 
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.Observable;
@@ -37,7 +41,6 @@ import quangnam.com.base.Config;
 
 /**
  * Created by quangnam on 4/18/16.
- *
  */
 public class Log {
     private static String TAG;
@@ -45,6 +48,8 @@ public class Log {
     public static void init(Context context) {
         TAG = context.getPackageName();
     }
+
+    public static final List<String> LOG_STACK = new ArrayList<>(Config.LOG_STACK_SIZE);
 
     //---------------------------Log Function auto Tag with formation  -----------------------------
     public static void d(String message, Object... args) {
@@ -64,6 +69,18 @@ public class Log {
     @SuppressWarnings("unused")
     public static void v(String message, Object... args) {
         tag_v(TAG, message, args);
+    }
+
+    public static void logException(Throwable exception) {
+        if (Config.USE_FABRIC) {
+            for (String message: LOG_STACK) {
+                Crashlytics.log(message);
+            }
+
+            String message = String.format("Exception %s is happened. Seem like it's handled.", exception);
+            Crashlytics.log(message);
+            Crashlytics.logException(exception);
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -109,6 +126,11 @@ public class Log {
         String log = args.length > 0
                 ? String.format(Locale.US, format, args)
                 : format;
+
+        if (LOG_STACK.size() >= Config.LOG_STACK_SIZE) {
+            LOG_STACK.remove(0);
+        }
+        LOG_STACK.add(log);
 
         switch (logLevel) {
             case android.util.Log.DEBUG:
