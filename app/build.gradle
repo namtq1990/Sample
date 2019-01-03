@@ -8,9 +8,13 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 apply plugin: 'io.fabric'
@@ -88,8 +92,8 @@ dependencies {
     // Dagger
     compile "com.google.dagger:dagger:$project.daggerVersion"
     compile "com.google.dagger:dagger-android-support:$project.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
-    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
 
     // Retrofit
     compile "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
@@ -110,6 +114,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 //apply plugin: 'com.google.gms.google-services'
