@@ -1,10 +1,8 @@
 package quangnam.com.sample.ui.test.activity
 
 import android.app.Activity
-
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import quangnam.com.sample.di.PerActivity
 import quangnam.com.sample.di.PerFragment
@@ -24,28 +22,18 @@ abstract class TestActivityModule {
     @PerActivity
     abstract fun activity(activity: TestActivity): Activity
 
+    @Binds
+    @PerActivity
+    abstract fun bindView(activity: TestActivity): ITestActivity.IView
+
+    @Binds
+    @PerActivity
+    abstract fun bindPresenter(presenter: TestPresenter): ITestActivity.IPresenter
+
     /**
      * Use only if activity has [android.support.v4.app.Fragment] use dagger
      */
     @PerFragment
     @ContributesAndroidInjector(modules = arrayOf(TestFragmentModule::class))
     abstract fun testFragment(): TestFragment
-
-    @Module
-    companion object {
-
-        @Provides
-        @PerActivity
-        @JvmStatic
-        fun provideTestView(activity: TestActivity): ITestActivity.IView {
-            return activity
-        }
-
-        @Provides
-        @PerActivity
-        @JvmStatic
-        fun provideTestPresenter(presenter: TestPresenter): ITestActivity.IPresenter {
-            return presenter
-        }
-    }
 }
