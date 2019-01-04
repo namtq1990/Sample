@@ -12,25 +12,19 @@ import quangnam.com.sample.di.module.BaseFragmentModule
  * Project Sample
  */
 
-@Module(includes = arrayOf(BaseFragmentModule::class))
+@Module(includes = [(BaseFragmentModule::class)])
 class TestFragmentModule {
 
     @Provides
     @PerFragment
-    fun bindFragment(fragment: TestFragment): Fragment {
-        return fragment
-    }
+    fun bindFragment(fragment: TestFragment): Fragment = fragment
 
     @Provides
     @PerFragment
-    fun provideView(fragment: TestFragment): ITestFragment.IView {
-        return fragment
-    }
+    fun provideView(fragment: TestFragment): ITestFragment.IView = fragment
 
     @Provides
     @PerFragment
-    fun providePresenter(presenter: TestPresenter): ITestFragment.IPresenter {
-        return presenter
-    }
+    fun providePresenter(presenter: TestPresenter): ITestFragment.IPresenter = presenter
 
 }

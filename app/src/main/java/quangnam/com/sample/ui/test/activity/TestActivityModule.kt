@@ -15,7 +15,7 @@ import quangnam.com.sample.ui.test.fragment.TestFragmentModule
  * Project base
  */
 
-@Module(includes = arrayOf(BaseActivityModule::class))
+@Module(includes = [BaseActivityModule::class])
 abstract class TestActivityModule {
 
     @Binds

@@ -32,8 +32,6 @@ abstract class BaseActivityModule {
         @ActivityFragmentManager
         @PerActivity
         @JvmStatic
-        fun provideFragmentManager(activity: Activity): FragmentManager {
-            return (activity as BaseActivity).supportFragmentManager
-        }
+        fun provideFragmentManager(activity: Activity): FragmentManager = (activity as BaseActivity).supportFragmentManager
     }
 }

@@ -19,7 +19,5 @@ class BaseFragmentModule {
     @Provides
     @ChildFragmentManager
     @PerFragment
-    fun provideFragmentManager(fragment: Fragment): FragmentManager {
-        return fragment.childFragmentManager
-    }
+    fun provideFragmentManager(fragment: Fragment): FragmentManager = fragment.childFragmentManager
 }

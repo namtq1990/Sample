@@ -11,13 +11,14 @@ import dagger.android.support.AndroidSupportInjectionModule
 import quangnam.com.sample.di.module.ActivityBuilder
 import quangnam.com.sample.di.module.AppModule
 import quangnam.com.sample.di.module.NetModule
+import quangnam.com.sample.di.module.ServiceBuilder
 
 /**
  * Created by quangnam on 10/16/17.
  * Project base
  */
 @Singleton
-@Component(modules = arrayOf(AndroidSupportInjectionModule::class, AppModule::class, ActivityBuilder::class, NetModule::class))
+@Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, ActivityBuilder::class, ServiceBuilder::class, NetModule::class])
 interface AppComponent {
 
     @Component.Builder

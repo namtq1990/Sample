@@ -29,27 +29,21 @@ import quangnam.com.sample.di.ApplicationContext
  */
 
 @Module
-class AppModule() {
+class AppModule {
 
     @Provides
     @Singleton
     @ApplicationContext
-    fun provideContext(application: Application): Context {
-        return application
-    }
+    fun provideContext(application: Application): Context = application
 
     @Provides
     @Singleton
     @ApplicationContext
-    fun provideApplication(application: quangnam.com.base.Application): quangnam.com.sample.Application {
-        return application as quangnam.com.sample.Application
-    }
+    fun provideApplication(application: quangnam.com.base.Application): quangnam.com.sample.Application = application as quangnam.com.sample.Application
 
     @Provides
     @Named("responseAdapter")
-    fun provideResponseAdapterFactory(factory: ResponseAdapterFactory): TypeAdapterFactory {
-        return factory
-    }
+    fun provideResponseAdapterFactory(factory: ResponseAdapterFactory): TypeAdapterFactory = factory
 
     @Provides
     @Singleton
@@ -63,19 +57,13 @@ class AppModule() {
 
     @Provides
     @Singleton
-    fun provideDatabaseHelper(helper: DatabaseHelper): IDatabaseHelper {
-        return helper
-    }
+    fun provideDatabaseHelper(helper: DatabaseHelper): IDatabaseHelper = helper
 
     @Provides
     @Singleton
-    fun providePrefHelper(helper: PrefHelper): IPrefHelper {
-        return helper
-    }
+    fun providePrefHelper(helper: PrefHelper): IPrefHelper = helper
 
     @Provides
     @Singleton
-    fun provideDataManager(dataManager: AppDataManager): DataManager {
-        return dataManager
-    }
+    fun provideDataManager(dataManager: AppDataManager): DataManager = dataManager
 }
