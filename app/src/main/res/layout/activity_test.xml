@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.test.activity.TestActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <Button
-        android:id="@+id/btn_viewpager_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Go to viewPager activity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <data>
+        <variable
+            name="data"
+            type="quangnam.com.sample.ui.test.activity.TestPresenter"/>
+        <variable
+            name="view"
+            type="quangnam.com.sample.ui.test.activity.TestActivity"/>
+    </data>
 
-    <quangnam.com.base.customView.AppButton
-        android:id="@+id/tv_test"
-        android:text="Custom TextView Test"
-        app:app_leftDrawable="@drawable/leak_canary_icon"
-        app:app_rightDrawable="@drawable/ic_close_black_24dp"
-        app:app_topDrawable="@drawable/ic_close_black_24dp"
-        app:app_bottomDrawable="@drawable/leak_canary_icon"
-        app:layout_constraintTop_toBottomOf="@+id/btn_viewpager_test"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.test.activity.TestActivity">
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_viewpager_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> view.openViewPagerPage()}"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Go to viewPager activity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <quangnam.com.base.customView.AppButton
+            android:id="@+id/tv_test"
+            android:text="@{data.MDogs}"
+            app:layout_constraintTop_toBottomOf="@+id/btn_viewpager_test"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
+

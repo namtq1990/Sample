@@ -1,20 +1,18 @@
 package quangnam.com.sample.ui.test.activity
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-
-import javax.inject.Inject
-
-import butterknife.ButterKnife
-import butterknife.OnClick
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import quangnam.com.sample.R
 import quangnam.com.sample.base.MvpActivity
+import quangnam.com.sample.databinding.ActivityTestBinding
 import quangnam.com.sample.di.PerActivity
 import quangnam.com.sample.ui.test.fragment.TestFragment
 import quangnam.com.sample.util.Navigator
+import javax.inject.Inject
 
 class TestActivity : MvpActivity(), ITestActivity.IView, HasSupportFragmentInjector  // Use if fragment need DI only
 {
@@ -27,24 +25,25 @@ class TestActivity : MvpActivity(), ITestActivity.IView, HasSupportFragmentInjec
     @Inject
     lateinit var mFragmentAndroidInjector: DispatchingAndroidInjector<Fragment>  // If fragment need DI
 
+    lateinit var mBinding: ActivityTestBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
-
+        mPresenter.onAttach(this)
+        mBinding = (DataBindingUtil.setContentView(this, R.layout.activity_test))
+        mBinding.apply {
+            mBinding.data = mPresenter as TestPresenter
+            mBinding.view = this@TestActivity
+        }
         val fragmentA = TestFragment.newInstance("A")
         supportFragmentManager.beginTransaction()
                 .add(R.id.root_container, fragmentA, "A")
                 .commit()
-
-        ButterKnife.bind(this)
-        mPresenter.onAttach(this)
-
         mPresenter.getTestingData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         mPresenter.onDetach()
     }
 
@@ -53,7 +52,6 @@ class TestActivity : MvpActivity(), ITestActivity.IView, HasSupportFragmentInjec
         return mFragmentAndroidInjector
     }
 
-    @OnClick(R.id.btn_viewpager_test)
     fun openViewPagerPage() {
         Navigator.navigateViewPagerActivity(this)
     }

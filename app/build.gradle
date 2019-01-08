@@ -69,6 +69,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 configurations.all {
@@ -78,43 +82,40 @@ configurations.all {
 dependencies {
     compile project(":base")
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     // RxJava
-    compile "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
-
-    // ButterKnife
-    compile 'com.jakewharton:butterknife:' + project.butterKnifeVersion
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + project.butterKnifeVersion
+    implementation "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
 
     // Dagger
-    compile "com.google.dagger:dagger:$project.daggerVersion"
-    compile "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$project.daggerVersion"
 
     // Retrofit
-    compile "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$project.okhttpLoggerVersion"
-    compile 'com.squareup.retrofit2:adapter-rxjava2:' + project.retrofitVersion
+    implementation "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$project.okhttpLoggerVersion"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:' + project.retrofitVersion
 
     // Google support
-    compile "com.android.support:appcompat-v7:$project.appcompatVersion"
-    compile "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
-    testCompile 'junit:junit:4.12'
+    implementation "com.android.support:appcompat-v7:$project.appcompatVersion"
+    implementation "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
+    kapt "com.android.databinding:compiler:$gradleBuildTool"
+    testImplementation 'junit:junit:4.12'
 
     // Multidex
-    compile 'com.android.support:multidex:' + project.multidexVersion
+    implementation 'com.android.support:multidex:' + project.multidexVersion
 
     // Firebase
-    compile 'com.google.firebase:firebase-messaging:' + firebaseVersion
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
+    implementation 'com.google.firebase:firebase-messaging:' + firebaseVersion
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 //apply plugin: 'com.google.gms.google-services'

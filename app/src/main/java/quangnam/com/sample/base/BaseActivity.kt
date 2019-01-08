@@ -5,4 +5,4 @@ package quangnam.com.sample.base
  * Project base
  */
 
-open class BaseActivity : quangnam.com.base.activity.BaseActivity()
+abstract class BaseActivity : quangnam.com.base.activity.BaseActivity()

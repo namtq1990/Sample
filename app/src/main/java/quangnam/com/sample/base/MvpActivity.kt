@@ -21,7 +21,7 @@ import javax.inject.Singleton
  * Project Sample
  */
 
-open class MvpActivity : BaseActivity(), IBaseView {
+abstract class MvpActivity : BaseActivity(), IBaseView {
 
     @Inject
     @field:ApplicationContext

@@ -1,5 +1,6 @@
 package quangnam.com.sample.ui.test.activity
 
+import android.databinding.ObservableField
 import java.util.ArrayList
 
 import javax.inject.Inject
@@ -22,6 +23,8 @@ import quangnam.com.sample.data.network.response.test.DogResponse
 class TestPresenter @Inject
 constructor(dataManager: DataManager) : BasePresenter<ITestActivity.IView>(dataManager), ITestActivity.IPresenter {
 
+    val mDogs: ObservableField<String> = ObservableField<String>("")
+
     override fun getTestingData() {
         disposable.add(dataManager.allTestingData
                 .subscribe(object : BaseSuccessAction<ResponseWrapper<ArrayList<DogResponse>>>() {
@@ -29,8 +32,10 @@ constructor(dataManager: DataManager) : BasePresenter<ITestActivity.IView>(dataM
                     override fun accept(t: ResponseWrapper<ArrayList<DogResponse>>) {
                         super.accept(t)
 
+                        mDogs.set("")
                         for (dog in t.`object`!!) {
                             Log.d("Dog: %s", dog.value)
+                            mDogs.set(mDogs.get() + "\n" + dog.value)
                         }
                     }
                 },
