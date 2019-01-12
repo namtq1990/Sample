@@ -77,11 +77,13 @@ android {
 
 configurations.all {
     resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
+    resolutionStrategy.force "com.android.support:appcompat-v7:$appcompatVersion"
+    resolutionStrategy.force "android.arch.lifecycle:runtime:1.1.1"
 }
 
 dependencies {
-    compile project(":base")
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":base")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -102,9 +104,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:' + project.retrofitVersion
 
     // Google support
-    implementation "com.android.support:appcompat-v7:$project.appcompatVersion"
     implementation "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
-    kapt "com.android.databinding:compiler:$gradleBuildTool"
     testImplementation 'junit:junit:4.12'
 
     // Multidex
