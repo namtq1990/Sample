@@ -44,25 +44,26 @@ configurations.all { config ->
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     // RxJava
-    implementation "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
-    implementation 'io.reactivex.rxjava2:rxandroid:' + project.rxAndroidVersion
+    api "io.reactivex.rxjava2:rxjava:" + project.rxJavaVersion
+    api 'io.reactivex.rxjava2:rxandroid:' + project.rxAndroidVersion
 
     // Android support
-    implementation 'com.android.support:appcompat-v7:' + appcompatVersion
-    implementation 'com.android.support:multidex:' + project.multidexVersion
-    implementation 'com.android.support:preference-v7:' + appcompatVersion
-    implementation 'com.android.support:design:' + appcompatVersion
-    implementation 'com.android.support:gridlayout-v7:' + appcompatVersion
+    api 'com.android.support:appcompat-v7:' + appcompatVersion
+    api 'com.android.support:multidex:' + project.multidexVersion
+    api 'com.android.support:preference-v7:' + appcompatVersion
+    api 'com.android.support:design:' + appcompatVersion
+    api 'com.android.support:gridlayout-v7:' + appcompatVersion
+    api "com.android.support.constraint:constraint-layout:$project.constraintLayoutVersion"
     testImplementation 'junit:junit:4.12'
 
     // Fabric
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
+    api('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
         transitive = true;
     }
 
