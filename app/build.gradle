@@ -78,7 +78,7 @@ android {
 configurations.all {
     resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
     resolutionStrategy.force "com.android.support:appcompat-v7:$appcompatVersion"
-    resolutionStrategy.force "android.arch.lifecycle:runtime:1.1.1"
+    resolutionStrategy.force "android.arch.lifecycle:runtime:$lifecycle_version"
 }
 
 dependencies {
@@ -101,10 +101,15 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:' + project.retrofitVersion
 
     // Google support
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
     testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
     // Multidex
     implementation 'com.android.support:multidex:' + project.multidexVersion
+
 
     // Firebase
     implementation 'com.google.firebase:firebase-messaging:' + firebaseVersion
