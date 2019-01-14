@@ -14,6 +14,7 @@ import quangnam.com.sample.base.rxjava.BaseSuccessAction
 import quangnam.com.sample.data.DataManager
 import quangnam.com.sample.data.network.response.ResponseWrapper
 import quangnam.com.sample.data.network.response.test.DogResponse
+import quangnam.com.sample.ui.test.interactors.TestUseCase
 
 /**
  * Created by quangnam on 10/16/17.
@@ -25,8 +26,11 @@ constructor(dataManager: DataManager) : BasePresenter<ITestActivity.IView>(dataM
 
     val mDogs: ObservableField<String> = ObservableField<String>("")
 
+    @Inject
+    lateinit var testUseCase: TestUseCase<Any>
+
     override fun getTestingData() {
-        disposable.add(dataManager.allTestingData
+        disposable.add(testUseCase.build()
                 .subscribe(object : BaseSuccessAction<ResponseWrapper<ArrayList<DogResponse>>>() {
                     @Throws(Exception::class)
                     override fun accept(t: ResponseWrapper<ArrayList<DogResponse>>) {

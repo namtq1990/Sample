@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by quangnam on 1/14/19.
  * Project Sample
  */
-abstract class BaseUseCase {
+abstract class BaseUseCase<T> {
 
     @Inject
     lateinit var mPrefHelper: IPrefHelper
