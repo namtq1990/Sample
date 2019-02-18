@@ -3,8 +3,7 @@ package quangnam.com.sample.ui.adapter
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by quangnam on 8/31/17.

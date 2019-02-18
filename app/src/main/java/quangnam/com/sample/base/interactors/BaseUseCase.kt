@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by quangnam on 1/14/19.
  * Project Sample
  */
-abstract class BaseUseCase<T> {
+abstract class BaseUseCase<T, O> {
 
     @Inject
     lateinit var mPrefHelper: IPrefHelper
@@ -19,5 +19,9 @@ abstract class BaseUseCase<T> {
 
     @Inject
     lateinit var mApiHelper: ApiHelper
+
+    open fun buildStream(o: O) : O = o
+
+    abstract fun execute(vararg params: Any?) : O
 
 }

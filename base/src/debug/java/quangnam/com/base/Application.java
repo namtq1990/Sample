@@ -41,7 +41,6 @@ import android.widget.RemoteViews;
 import com.crashlytics.android.Crashlytics;
 import com.squareup.leakcanary.LeakCanary;
 
-import io.fabric.sdk.android.DefaultLogger;
 import io.fabric.sdk.android.Fabric;
 import quangnam.com.base.service.FloatingViewService;
 import quangnam.com.base.utils.Log;

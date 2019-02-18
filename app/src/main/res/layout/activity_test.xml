@@ -5,42 +5,57 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="data"
-            type="quangnam.com.sample.ui.test.activity.TestPresenter"/>
+            type="quangnam.com.sample.ui.test.modelview.TestViewModel"/>
         <variable
             name="view"
             type="quangnam.com.sample.ui.test.activity.TestActivity"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/root_container"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.test.activity.TestActivity">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_viewpager_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> view.openViewPagerPage()}"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Go to viewPager activity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/root_container"
+            android:visibility="@{data.isLoading ? View.INVISIBLE : View.VISIBLE}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.test.activity.TestActivity">
 
-        <quangnam.com.base.customView.AppButton
-            android:id="@+id/tv_test"
-            android:text="@{data.MDogs}"
-            app:layout_constraintTop_toBottomOf="@+id/btn_viewpager_test"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            <quangnam.com.base.customView.AppButton
+                android:id="@+id/btn_viewpager_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> view.openViewPagerPage()}"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Go to viewPager activity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_dogs"
+                app:layout_constraintTop_toBottomOf="@id/btn_viewpager_test"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:visibility="@{data.isLoading ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
+
 </layout>
 

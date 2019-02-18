@@ -3,9 +3,6 @@ package quangnam.com.sample.ui.test.activity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -14,6 +11,7 @@ import quangnam.com.sample.base.MvpActivity
 import quangnam.com.sample.di.PerActivity
 import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
 import quangnam.com.sample.ui.test.fragment.TestFragment
+import javax.inject.Inject
 
 class ViewPagerTestActivity : MvpActivity(), HasSupportFragmentInjector // **NOTE: Use if activity has fragment need DI only
 {

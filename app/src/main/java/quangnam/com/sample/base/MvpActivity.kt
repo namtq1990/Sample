@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v4.app.FragmentManager
 import android.widget.Toast
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjection
 import quangnam.com.base.exception.BaseException
 import quangnam.com.sample.di.ActivityContext
 import quangnam.com.sample.di.ActivityFragmentManager
 import quangnam.com.sample.di.ApplicationContext
 import quangnam.com.sample.di.PerActivity
-import javax.inject.Singleton
+import javax.inject.Inject
 
 /**
  * Created by quangnam on 11/23/17.

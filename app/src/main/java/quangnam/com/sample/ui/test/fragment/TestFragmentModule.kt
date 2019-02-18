@@ -19,12 +19,4 @@ class TestFragmentModule {
     @PerFragment
     fun bindFragment(fragment: TestFragment): Fragment = fragment
 
-    @Provides
-    @PerFragment
-    fun provideView(fragment: TestFragment): ITestFragment.IView = fragment
-
-    @Provides
-    @PerFragment
-    fun providePresenter(presenter: TestPresenter): ITestFragment.IPresenter = presenter
-
 }

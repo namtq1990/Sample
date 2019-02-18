@@ -1,11 +1,10 @@
 package quangnam.com.sample.data.network
 
-import java.util.ArrayList
-
 import io.reactivex.Observable
 import quangnam.com.sample.data.network.response.ResponseWrapper
 import quangnam.com.sample.data.network.response.test.DogResponse
 import retrofit2.http.GET
+import java.util.*
 
 /**
  * Created by quangnam on 1/21/18.

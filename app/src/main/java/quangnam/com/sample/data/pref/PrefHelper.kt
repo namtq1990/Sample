@@ -3,10 +3,8 @@ package quangnam.com.sample.data.pref
 import android.content.Context
 import android.content.SharedPreferences
 import android.support.v7.preference.PreferenceManager
-
-import javax.inject.Inject
-
 import quangnam.com.sample.di.ApplicationContext
+import javax.inject.Inject
 
 /**
  * Created by quangnam on 2/14/18.

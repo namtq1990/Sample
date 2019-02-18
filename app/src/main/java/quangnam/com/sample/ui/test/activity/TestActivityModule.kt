@@ -3,12 +3,16 @@ package quangnam.com.sample.ui.test.activity
 import android.app.Activity
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import quangnam.com.sample.di.PerActivity
 import quangnam.com.sample.di.PerFragment
 import quangnam.com.sample.di.module.BaseActivityModule
 import quangnam.com.sample.ui.test.fragment.TestFragment
 import quangnam.com.sample.ui.test.fragment.TestFragmentModule
+import quangnam.com.sample.ui.test.interactors.TestUseCase
+import quangnam.com.sample.ui.test.modelview.TestViewModel
+import javax.inject.Provider
 
 /**
  * Created by quangnam on 10/16/17.
@@ -22,18 +26,24 @@ abstract class TestActivityModule {
     @PerActivity
     abstract fun activity(activity: TestActivity): Activity
 
-    @Binds
-    @PerActivity
-    abstract fun bindView(activity: TestActivity): ITestActivity.IView
+    @Module
+    class ProvideViewModel {
 
-    @Binds
-    @PerActivity
-    abstract fun bindPresenter(presenter: TestPresenter): ITestActivity.IPresenter
+        @Provides
+        @PerActivity
+        fun provideTestViewModel(testUseCase: TestUseCase) = TestViewModel(testUseCase)
+
+        @Provides
+        @PerActivity
+        fun provideTestViewModelFactory(provider: Provider<TestViewModel>) = TestViewModel.Factory(provider)
+    }
 
     /**
      * Use only if activity has [android.support.v4.app.Fragment] use dagger
      */
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(TestFragmentModule::class))
+    @ContributesAndroidInjector(modules = [TestFragmentModule::class])
     abstract fun testFragment(): TestFragment
+
+
 }

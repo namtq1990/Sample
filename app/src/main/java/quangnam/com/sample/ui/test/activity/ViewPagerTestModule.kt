@@ -24,7 +24,7 @@ abstract class ViewPagerTestModule {
     abstract fun bind(activity: ViewPagerTestActivity): Activity
 
     @PerFragment
-    @ContributesAndroidInjector(modules = arrayOf(TestFragmentModule::class))
+    @ContributesAndroidInjector(modules = [TestFragmentModule::class])
     abstract fun testFragment(): TestFragment
 
 }

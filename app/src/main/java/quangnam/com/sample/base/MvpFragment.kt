@@ -6,9 +6,6 @@ import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.widget.Toast
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
@@ -17,6 +14,7 @@ import quangnam.com.base.exception.BaseException
 import quangnam.com.sample.di.ActivityContext
 import quangnam.com.sample.di.ChildFragmentManager
 import quangnam.com.sample.di.PerFragment
+import javax.inject.Inject
 
 /**
  * Created by quangnam on 11/23/17.

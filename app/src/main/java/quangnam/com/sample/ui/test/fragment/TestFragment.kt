@@ -5,24 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-import javax.inject.Inject
-
 import dagger.android.support.AndroidSupportInjection
 import quangnam.com.sample.base.MvpFragment
+import javax.inject.Inject
 
 /**
  * Created by quangnam on 11/23/17.
  * Project Sample
  */
 
-class TestFragment : MvpFragment(), ITestFragment.IView {
+class TestFragment : MvpFragment() {
 
     val label: String?
         get() = arguments!!.getString(ARG_LABEL)
 
     @Inject
-    lateinit var mPresenter: ITestFragment.IPresenter
+    lateinit var mViewModel: TestViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -35,17 +33,11 @@ class TestFragment : MvpFragment(), ITestFragment.IView {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         AndroidSupportInjection.inject(this)
-        mPresenter.onAttach(this)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mPresenter.onDetach()
     }
 
     companion object {
 
-        private val ARG_LABEL = "label"
+        private const val ARG_LABEL = "label"
 
         fun newInstance(label: String): TestFragment {
 

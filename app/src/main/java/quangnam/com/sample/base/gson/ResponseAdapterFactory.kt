@@ -2,22 +2,18 @@ package quangnam.com.sample.base.gson
 
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.google.gson.TypeAdapter
 import com.google.gson.TypeAdapterFactory
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
-
-import java.io.IOException
-
-import javax.inject.Inject
-
 import quangnam.com.sample.data.exception.ApiException
 import quangnam.com.sample.data.network.response.BaseErrorResponse
 import quangnam.com.sample.data.network.response.ResponseWrapper
 import quangnam.com.sample.util.AppUtils
 import quangnam.com.sample.util.Constant
+import java.io.IOException
+import javax.inject.Inject
 
 /**
  * Created by quangnam on 2/26/18.

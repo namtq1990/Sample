@@ -1,14 +1,11 @@
 package quangnam.com.sample.util
 
 import android.content.Context
-
-import java.util.Locale
-
-import javax.inject.Inject
-import javax.inject.Singleton
-
 import quangnam.com.base.exception.BaseException
 import quangnam.com.sample.di.ApplicationContext
+import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by co-well on 2/28/18.

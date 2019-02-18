@@ -1,50 +1,78 @@
 package quangnam.com.sample.ui.test.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.android.synthetic.main.activity_test.*
 import quangnam.com.sample.R
 import quangnam.com.sample.base.MvpActivity
 import quangnam.com.sample.databinding.ActivityTestBinding
 import quangnam.com.sample.di.PerActivity
+import quangnam.com.sample.ui.adapter.DogAdapter
 import quangnam.com.sample.ui.test.fragment.TestFragment
+import quangnam.com.sample.ui.test.modelview.TestViewModel
 import quangnam.com.sample.util.Navigator
 import javax.inject.Inject
 
-class TestActivity : MvpActivity(), ITestActivity.IView, HasSupportFragmentInjector  // Use if fragment need DI only
+class TestActivity : MvpActivity(), HasSupportFragmentInjector  // Use if fragment need DI only
 {
+    lateinit var mViewModel: TestViewModel
 
     @PerActivity
     @Inject
-    lateinit var mPresenter: ITestActivity.IPresenter
+    lateinit var mViewModelFactory: TestViewModel.Factory
 
     @PerActivity
     @Inject
     lateinit var mFragmentAndroidInjector: DispatchingAndroidInjector<Fragment>  // If fragment need DI
 
+    @PerActivity
+    @Inject
+    lateinit var mAdapter: DogAdapter
+
     lateinit var mBinding: ActivityTestBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPresenter.onAttach(this)
         mBinding = (DataBindingUtil.setContentView(this, R.layout.activity_test))
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory)[TestViewModel::class.java]
+
         mBinding.apply {
-            mBinding.data = mPresenter as TestPresenter
+            mBinding.data = mViewModel
             mBinding.view = this@TestActivity
+            mBinding.setLifecycleOwner(this@TestActivity)
         }
-        val fragmentA = TestFragment.newInstance("A")
-        supportFragmentManager.beginTransaction()
-                .add(R.id.root_container, fragmentA, "A")
-                .commit()
-        mPresenter.getTestingData()
+
+        initView()
+        initData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter.onDetach()
+        mBinding.unbind()
+    }
+
+    fun initView() {
+        list_dogs.layoutManager = LinearLayoutManager(this)
+        list_dogs.adapter = mAdapter
+
+        val fragmentA = TestFragment.newInstance("A")
+        supportFragmentManager.beginTransaction()
+                .add(R.id.root_container, fragmentA, "A")
+                .commit()
+    }
+
+    fun initData() {
+        mViewModel.getTestingData()
+        mViewModel.mDogs.observe(this, Observer { t ->
+            mAdapter.data = t ?: ArrayList()
+        })
     }
 
     // Use if Fragment need DI only

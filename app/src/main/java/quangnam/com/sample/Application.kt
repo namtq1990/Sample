@@ -1,14 +1,12 @@
 package quangnam.com.sample
 
 import android.app.Activity
-
 import com.crashlytics.android.Crashlytics
-import io.fabric.sdk.android.Fabric
-import javax.inject.Inject
-
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import io.fabric.sdk.android.Fabric
 import quangnam.com.sample.di.component.DaggerAppComponent
+import javax.inject.Inject
 
 /**
  * Created by quangnam on 10/16/17.
