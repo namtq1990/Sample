@@ -3,8 +3,8 @@ package quangnam.com.sample.util
 import android.content.Context
 import android.content.Intent
 
-import quangnam.com.sample.ui.test.activity.TestActivity
-import quangnam.com.sample.ui.test.activity.ViewPagerTestActivity
+import quangnam.com.sample.module.test.activity.TestActivity
+import quangnam.com.sample.module.test.activity.ViewPagerTestActivity
 
 /**
  * Created by quangnam on 12/12/17.

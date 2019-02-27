@@ -8,10 +8,10 @@
         <import type="android.view.View"/>
         <variable
             name="data"
-            type="quangnam.com.sample.ui.test.modelview.TestViewModel"/>
+            type="quangnam.com.sample.module.test.modelview.TestViewModel"/>
         <variable
             name="view"
-            type="quangnam.com.sample.ui.test.activity.TestActivity"/>
+            type="quangnam.com.sample.module.test.activity.TestActivity"/>
     </data>
 
     <FrameLayout
@@ -23,7 +23,7 @@
             android:visibility="@{data.isLoading ? View.INVISIBLE : View.VISIBLE}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.test.activity.TestActivity">
+            tools:context=".module.test.activity.TestActivity">
 
             <quangnam.com.base.customView.AppButton
                 android:id="@+id/btn_viewpager_test"
@@ -53,6 +53,11 @@
             android:visibility="@{data.isLoading ? View.VISIBLE : View.INVISIBLE}"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:adjustViewBounds="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     </FrameLayout>

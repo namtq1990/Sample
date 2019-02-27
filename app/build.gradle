@@ -19,7 +19,6 @@ repositories {
 
 apply plugin: 'io.fabric'
 
-
 // Store keystore
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -84,6 +83,7 @@ configurations.all {
 dependencies {
     implementation project(":base")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:support-v4:28.0.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -103,13 +103,11 @@ dependencies {
     // Google support
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
-    implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
     // Multidex
     implementation 'com.android.support:multidex:' + project.multidexVersion
-
 
     // Firebase
     implementation 'com.google.firebase:firebase-messaging:' + firebaseVersion
@@ -120,3 +118,4 @@ dependencies {
 }
 
 //apply plugin: 'com.google.gms.google-services'
+

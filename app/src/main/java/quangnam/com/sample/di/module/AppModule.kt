@@ -7,8 +7,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.TypeAdapterFactory
 import dagger.Module
 import dagger.Provides
-import quangnam.com.sample.base.gson.ResponseAdapterFactory
-import quangnam.com.sample.base.gson.StringResponseParser
+import quangnam.com.sample.module.base.gson.ResponseAdapterFactory
+import quangnam.com.sample.module.base.gson.StringResponseParser
 import quangnam.com.sample.data.database.DatabaseHelper
 import quangnam.com.sample.data.database.IDatabaseHelper
 import quangnam.com.sample.data.network.response.StringResponse

@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import quangnam.com.sample.base.BaseActivity
+import quangnam.com.sample.module.base.BaseActivity
 import quangnam.com.sample.di.ActivityContext
 import quangnam.com.sample.di.ActivityFragmentManager
 import quangnam.com.sample.di.PerActivity
