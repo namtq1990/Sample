@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import quangnam.com.sample.di.PerChildFragment
 import quangnam.com.sample.di.PerFragment
+import quangnam.com.sample.di.module.BaseChildFragmentModule
 import quangnam.com.sample.di.module.BaseFragmentModule
 
 /**
@@ -13,7 +14,7 @@ import quangnam.com.sample.di.module.BaseFragmentModule
  * Project Sample
  */
 
-@Module(includes = [(BaseFragmentModule::class)])
+@Module(includes = [(BaseChildFragmentModule::class)])
 class TestFragmentModule {
 
     @Provides

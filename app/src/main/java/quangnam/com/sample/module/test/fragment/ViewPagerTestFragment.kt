@@ -10,20 +10,18 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.fragment_view_pager_test.*
+import kotlinx.android.synthetic.main.fragment_view_pager_test.view.*
 import quangnam.com.sample.R
 import quangnam.com.sample.di.PerChildFragment
+import quangnam.com.sample.module.base.MvpFragment
 import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
 import javax.inject.Inject
 
 
-class ViewPagerTestFragment : Fragment()
-        , HasSupportFragmentInjector    // Use if this fragment has child fragment need DI
+class ViewPagerTestFragment : MvpFragment()
 {
 
     lateinit var adapter: ViewPagerFragmentAdapter
-
-    @Inject
-    lateinit var mFragmentInjector: DispatchingAndroidInjector<Fragment>    // Use if this fragment has child fragment need DI
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,17 +31,10 @@ class ViewPagerTestFragment : Fragment()
         adapter.addFragment(fragment, "Tille A")
         fragment = TestFragment.newInstance("B")
         adapter.addFragment(fragment, "Title B")
-        pager.adapter = adapter
+        rootView.pager.adapter = adapter
 
         return rootView
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        AndroidSupportInjection.inject(this)
-    }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = mFragmentInjector
 
     companion object {
         @JvmStatic
