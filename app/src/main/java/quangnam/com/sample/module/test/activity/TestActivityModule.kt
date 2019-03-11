@@ -10,6 +10,8 @@ import quangnam.com.sample.di.PerFragment
 import quangnam.com.sample.di.module.BaseActivityModule
 import quangnam.com.sample.module.test.fragment.TestFragment
 import quangnam.com.sample.module.test.fragment.TestFragmentModule
+import quangnam.com.sample.module.test.fragment.ViewPagerTestFragment
+import quangnam.com.sample.module.test.fragment.ViewPagerTestModule
 import quangnam.com.sample.module.test.interactors.TestUseCase
 import quangnam.com.sample.module.test.modelview.TestViewModel
 import javax.inject.Provider
@@ -42,8 +44,8 @@ abstract class TestActivityModule {
      * Use only if activity has [android.support.v4.app.Fragment] use dagger
      */
     @PerFragment
-    @ContributesAndroidInjector(modules = [TestFragmentModule::class])
-    abstract fun testFragment(): TestFragment
+    @ContributesAndroidInjector(modules = [ViewPagerTestModule::class])
+    abstract fun testFragment(): ViewPagerTestFragment
 
 
 }

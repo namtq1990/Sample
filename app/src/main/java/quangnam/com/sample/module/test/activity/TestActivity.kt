@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.widget.LinearLayoutManager
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -17,6 +18,7 @@ import quangnam.com.sample.di.PerActivity
 import quangnam.com.sample.ui.adapter.DogAdapter
 import quangnam.com.sample.module.test.fragment.TestFragment
 import quangnam.com.sample.module.test.modelview.TestViewModel
+import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
 import quangnam.com.sample.util.Navigator
 import javax.inject.Inject
 
@@ -31,10 +33,6 @@ class TestActivity : MvpActivity(), HasSupportFragmentInjector  // Use if fragme
     @PerActivity
     @Inject
     lateinit var mFragmentAndroidInjector: DispatchingAndroidInjector<Fragment>  // If fragment need DI
-
-    @PerActivity
-    @Inject
-    lateinit var mAdapter: DogAdapter
 
     lateinit var mBinding: ActivityTestBinding
 
@@ -59,20 +57,20 @@ class TestActivity : MvpActivity(), HasSupportFragmentInjector  // Use if fragme
     }
 
     fun initView() {
-        list_dogs.layoutManager = LinearLayoutManager(this)
-        list_dogs.adapter = mAdapter
-
-        val fragmentA = TestFragment.newInstance("A")
-        supportFragmentManager.beginTransaction()
-                .add(R.id.root_container, fragmentA, "A")
-                .commit()
+//        list_dogs.layoutManager = LinearLayoutManager(this)
+//        list_dogs.adapter = mAdapter
+//
+//        val fragmentA = TestFragment.newInstance("A")
+//        supportFragmentManager.beginTransaction()
+//                .add(R.id.root_container, fragmentA, "A")
+//                .commit()
     }
 
     fun initData() {
-        mViewModel.getTestingData()
-        mViewModel.mDogs.observe(this, Observer { t ->
-            mAdapter.data = t ?: ArrayList()
-        })
+//        mViewModel.getTestingData()
+//        mViewModel.mDogs.observe(this, Observer { t ->
+//            mAdapter.data = t ?: ArrayList()
+//        })
     }
 
     // Use if Fragment need DI only

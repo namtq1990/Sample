@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment
 
 import dagger.Module
 import dagger.Provides
+import quangnam.com.sample.di.PerChildFragment
 import quangnam.com.sample.di.PerFragment
 import quangnam.com.sample.di.module.BaseFragmentModule
 
@@ -16,7 +17,7 @@ import quangnam.com.sample.di.module.BaseFragmentModule
 class TestFragmentModule {
 
     @Provides
-    @PerFragment
+    @PerChildFragment
     fun bindFragment(fragment: TestFragment): Fragment = fragment
 
 }
