@@ -30,11 +30,6 @@ class TestFragment : MvpFragment() {
         return rootView
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        AndroidSupportInjection.inject(this)
-    }
-
     companion object {
 
         private const val ARG_LABEL = "label"
