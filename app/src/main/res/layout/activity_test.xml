@@ -25,6 +25,7 @@
 
             <fragment
                 android:tag="TestViewPager"
+                tools:layout="@layout/fragment_view_pager_test"
                 class="quangnam.com.sample.module.test.fragment.ViewPagerTestFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
