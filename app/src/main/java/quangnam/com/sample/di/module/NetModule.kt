@@ -7,8 +7,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import quangnam.com.base.Config
 import quangnam.com.sample.BuildConfig
-import quangnam.com.sample.module.base.network.RetrofitCallAdapterFactory
 import quangnam.com.sample.data.network.ApiHelper
+import quangnam.com.sample.module.base.network.RetrofitCallAdapterFactory
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit

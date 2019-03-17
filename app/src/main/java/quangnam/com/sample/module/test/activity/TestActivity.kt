@@ -1,24 +1,17 @@
 package quangnam.com.sample.module.test.activity
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v7.widget.LinearLayoutManager
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.activity_test.*
 import quangnam.com.sample.R
-import quangnam.com.sample.module.base.MvpActivity
 import quangnam.com.sample.databinding.ActivityTestBinding
 import quangnam.com.sample.di.PerActivity
-import quangnam.com.sample.ui.adapter.DogAdapter
-import quangnam.com.sample.module.test.fragment.TestFragment
+import quangnam.com.sample.module.base.MvpActivity
 import quangnam.com.sample.module.test.modelview.TestViewModel
-import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
 import quangnam.com.sample.util.Navigator
 import javax.inject.Inject
 

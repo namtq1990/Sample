@@ -5,9 +5,10 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import quangnam.com.sample.module.base.BaseViewModel
 import quangnam.com.sample.data.network.response.test.DogResponse
+import quangnam.com.sample.module.base.BaseViewModel
 import quangnam.com.sample.module.test.interactors.TestUseCase
+import javax.inject.Inject
 import javax.inject.Provider
 
 /**
@@ -40,9 +41,9 @@ class TestViewModel(val testUseCase: TestUseCase)
         disposable.add(mDogObservable!!.subscribe({ }, { onError(it) }))
     }
 
-    class Factory(val provider: Provider<TestViewModel>) : ViewModelProvider.Factory {
+    class Factory @Inject constructor(val map: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return provider.get() as T
+            return map.getValue(modelClass).get() as T
         }
 
     }

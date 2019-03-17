@@ -16,7 +16,7 @@ import quangnam.com.sample.module.test.activity.ViewPagerTestModule
 @Module
 abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = [TestActivityModule::class, TestActivityModule.ProvideViewModel::class])
+    @ContributesAndroidInjector(modules = [TestActivityModule::class])
     @PerActivity
     abstract fun bindTestActivity(): TestActivity
 

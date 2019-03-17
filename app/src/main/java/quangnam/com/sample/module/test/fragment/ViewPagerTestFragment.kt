@@ -1,21 +1,13 @@
 package quangnam.com.sample.module.test.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.fragment_view_pager_test.*
 import kotlinx.android.synthetic.main.fragment_view_pager_test.view.*
 import quangnam.com.sample.R
-import quangnam.com.sample.di.PerChildFragment
 import quangnam.com.sample.module.base.MvpFragment
 import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
-import javax.inject.Inject
 
 
 class ViewPagerTestFragment : MvpFragment()

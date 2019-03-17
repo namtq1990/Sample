@@ -1,12 +1,13 @@
 package quangnam.com.sample.module.test.fragment
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import dagger.android.support.AndroidSupportInjection
 import quangnam.com.sample.module.base.MvpFragment
+import quangnam.com.sample.module.test.modelview.TestViewModel
 import javax.inject.Inject
 
 /**
@@ -20,6 +21,8 @@ class TestFragment : MvpFragment() {
         get() = arguments!!.getString(ARG_LABEL)
 
     @Inject
+    lateinit var mViewModelFactory: TestViewModel.Factory
+
     lateinit var mViewModel: TestViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,6 +31,11 @@ class TestFragment : MvpFragment() {
         rootView.text = label
 
         return rootView
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        mViewModel = ViewModelProviders.of(this, mViewModelFactory)[TestViewModel::class.java]
     }
 
     companion object {

@@ -7,10 +7,10 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import quangnam.com.sample.R
-import quangnam.com.sample.module.base.MvpActivity
 import quangnam.com.sample.di.PerActivity
-import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
+import quangnam.com.sample.module.base.MvpActivity
 import quangnam.com.sample.module.test.fragment.TestFragment
+import quangnam.com.sample.ui.adapter.ViewPagerFragmentAdapter
 import javax.inject.Inject
 
 class ViewPagerTestActivity : MvpActivity(), HasSupportFragmentInjector // **NOTE: Use if activity has fragment need DI only
