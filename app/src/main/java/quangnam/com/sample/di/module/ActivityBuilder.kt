@@ -2,11 +2,9 @@ package quangnam.com.sample.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import quangnam.com.sample.di.PerActivity
-import quangnam.com.sample.module.test.activity.TestActivity
-import quangnam.com.sample.module.test.activity.TestActivityModule
-import quangnam.com.sample.module.test.activity.ViewPagerTestActivity
-import quangnam.com.sample.module.test.activity.ViewPagerTestModule
+import quangnam.com.sample.feature.test.activity.TestActivity
+import quangnam.com.sample.feature.test.activity.TestActivityModule
+import quangnam.com.sample.feature.test.activity.TestActivityScope
 
 /**
  * Created by quangnam on 10/16/17.
@@ -17,10 +15,10 @@ import quangnam.com.sample.module.test.activity.ViewPagerTestModule
 abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [TestActivityModule::class, TestActivityModule.ProvideViewModel::class])
-    @PerActivity
+    @TestActivityScope
     abstract fun bindTestActivity(): TestActivity
 
-    @ContributesAndroidInjector(modules = [ViewPagerTestModule::class])
-    @PerActivity
-    abstract fun bindTestPagerActivity(): ViewPagerTestActivity
+//    @ContributesAndroidInjector(modules = [ViewPagerTestModule::class])
+//    @ViewPagerTestScope
+//    abstract fun bindTestPagerActivity(): ViewPagerTestActivity
 }

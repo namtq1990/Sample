@@ -5,10 +5,7 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
-import quangnam.com.sample.di.module.ActivityBuilder
-import quangnam.com.sample.di.module.AppModule
-import quangnam.com.sample.di.module.NetModule
-import quangnam.com.sample.di.module.ServiceBuilder
+import quangnam.com.sample.di.module.*
 import javax.inject.Singleton
 
 /**
@@ -16,7 +13,13 @@ import javax.inject.Singleton
  * Project base
  */
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, ActivityBuilder::class, ServiceBuilder::class, NetModule::class])
+@Component(modules = [AndroidSupportInjectionModule::class,
+    AppModule::class,
+    ActivityBuilder::class,
+    ServiceBuilder::class,
+    NetModule::class,
+    ViewModelModule::class
+])
 interface AppComponent {
 
     @Component.Builder

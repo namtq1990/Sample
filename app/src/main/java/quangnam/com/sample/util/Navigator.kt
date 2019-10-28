@@ -3,8 +3,7 @@ package quangnam.com.sample.util
 import android.content.Context
 import android.content.Intent
 
-import quangnam.com.sample.module.test.activity.TestActivity
-import quangnam.com.sample.module.test.activity.ViewPagerTestActivity
+import quangnam.com.sample.feature.test.activity.TestActivity
 
 /**
  * Created by quangnam on 12/12/17.
@@ -27,7 +26,7 @@ object Navigator {
      * Show activity with fragment in viewpager
      */
     fun navigateViewPagerActivity(context: Context) {
-        val intent = Intent(context, ViewPagerTestActivity::class.java)
-        context.startActivity(intent)
+//        val intent = Intent(context, ViewPagerTestActivity::class.java)
+//        context.startActivity(intent)
     }
 }

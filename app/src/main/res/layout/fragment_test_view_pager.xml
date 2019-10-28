@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="quangnam.com.sample.module.test.fragment.TestViewPager">
+             tools:context="quangnam.com.sample.feature.test.fragment.TestViewPager">
 
     <quangnam.com.sample.ui.view.ViewPager
         android:id="@+id/pager"
