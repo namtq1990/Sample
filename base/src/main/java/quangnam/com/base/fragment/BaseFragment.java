@@ -26,10 +26,9 @@ package quangnam.com.base.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by quangnam on 11/12/15.
@@ -69,7 +68,7 @@ public class BaseFragment extends android.support.v4.app.Fragment implements IBa
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mDelegate.onSaveInstanceState(outState);
     }
@@ -134,17 +133,8 @@ public class BaseFragment extends android.support.v4.app.Fragment implements IBa
         mDelegate.requestAtPriority(priority);
     }
 
-    @Override
-    public void subscribe(Disposable disposable) {
-        mDelegate.subscribe(disposable);
-    }
-
     public Context getApplicationContext() {
         return mDelegate.getApplicationContext();
     }
 
-    @Override
-    public int getSaveID() {
-        return mDelegate.getSaveID();
-    }
 }

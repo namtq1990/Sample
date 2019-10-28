@@ -28,8 +28,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import quangnam.com.base.Application;
 import quangnam.com.base.activity.BaseActivity;
 import quangnam.com.base.utils.Log;
@@ -40,19 +38,13 @@ import quangnam.com.base.utils.Log;
  */
 class FragmentImpl implements IBaseFragment {
     private static final String TAG = FragmentImpl.class.getName();
-    private static final String ARG_SAVED_HOST = TAG + "_savedHostID";
 
-    private int mSaveID;
     private Application mAppContext;
     private BaseActivity mActivity;
     private IBaseFragment mHost;
 
-    private CompositeDisposable mDisposable;
-
     FragmentImpl(IBaseFragment host) {
-        mDisposable = new CompositeDisposable();
         mHost = host;
-        mSaveID = hashCode();
     }
 
     @Override
@@ -71,22 +63,16 @@ class FragmentImpl implements IBaseFragment {
 
     @Override
     public void onCreate(Bundle savedState) {
-        if (savedState != null) {
-            mSaveID = savedState.getInt(ARG_SAVED_HOST);
-        }
-
         Log.d("Fragment %s onCreate", mHost);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(ARG_SAVED_HOST, mHost.hashCode());
         Log.d("Fragment %s onSaveInstanceState", mHost);
     }
 
     @Override
     public void onDestroy() {
-        mDisposable.clear();
         Log.d("Fragment %s onDestroy", mHost);
     }
 
@@ -118,11 +104,6 @@ class FragmentImpl implements IBaseFragment {
     @Override
     public Context getApplicationContext() {
         return mAppContext;
-    }
-
-    @Override
-    public int getSaveID() {
-        return mSaveID;
     }
 
     @Override
@@ -162,8 +143,4 @@ class FragmentImpl implements IBaseFragment {
         mActivity.requestAtPriority(priority, mHost);
     }
 
-    @Override
-    public void subscribe(Disposable disposable) {
-        mDisposable.add(disposable);
-    }
 }

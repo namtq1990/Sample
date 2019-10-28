@@ -37,9 +37,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -101,7 +99,6 @@ public class FloatingViewService extends Service {
             R.id.btn_command,
             R.id.btn_change_url
     };
-    private Handler mHandler = new Handler(Looper.getMainLooper());
     private WindowManager mWindowManager;
     private WindowManager.LayoutParams mLayoutParams;
     private View mFloatingView;

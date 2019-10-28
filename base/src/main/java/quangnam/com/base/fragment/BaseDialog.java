@@ -26,11 +26,10 @@ package quangnam.com.base.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-
-import io.reactivex.disposables.Disposable;
 
 public class BaseDialog extends DialogFragment implements IBaseFragment {
 
@@ -64,7 +63,7 @@ public class BaseDialog extends DialogFragment implements IBaseFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mDelegate.onSaveInstanceState(outState);
     }
@@ -130,17 +129,8 @@ public class BaseDialog extends DialogFragment implements IBaseFragment {
     }
 
     @Override
-    public void subscribe(Disposable disposable) {
-        mDelegate.subscribe(disposable);
-    }
-
-    @Override
     public Context getApplicationContext() {
         return mDelegate.getApplicationContext();
     }
 
-    @Override
-    public int getSaveID() {
-        return mDelegate.getSaveID();
-    }
 }

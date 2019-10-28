@@ -30,14 +30,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import quangnam.com.base.activity.BaseActivity;
-import quangnam.com.base.interfaces.AutoUnsubscribe;
-import quangnam.com.base.interfaces.IPreviousID;
 
 /**
  * Created by quangnam on 1/31/16.
  * Interface to active with {@link ( BaseActivity )}
  */
-public interface IBaseFragment extends AutoUnsubscribe, IPreviousID {
+public interface IBaseFragment {
 
     void onAttach(Context context);
     void onDetach();

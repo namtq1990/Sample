@@ -29,8 +29,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import io.reactivex.disposables.Disposable;
-
+@SuppressWarnings("unused")
 public abstract class BasePreferenceFragment extends PreferenceFragmentCompat implements IBaseFragment {
 
     private FragmentImpl mDelegate;
@@ -126,16 +125,6 @@ public abstract class BasePreferenceFragment extends PreferenceFragmentCompat im
     @Override
     public void requestAtPriority(int priority) {
         mDelegate.requestAtPriority(priority);
-    }
-
-    @Override
-    public void subscribe(Disposable disposable) {
-        mDelegate.subscribe(disposable);
-    }
-
-    @Override
-    public int getSaveID() {
-        return mDelegate.getSaveID();
     }
 
     @Override

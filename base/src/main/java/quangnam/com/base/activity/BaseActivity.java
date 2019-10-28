@@ -34,13 +34,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import quangnam.com.base.fragment.AlertDialogFragment;
 import quangnam.com.base.fragment.BaseDataFragment;
 import quangnam.com.base.fragment.IBaseFragment;
-import quangnam.com.base.interfaces.AutoUnsubscribe;
-import quangnam.com.base.interfaces.IPreviousID;
 import quangnam.com.base.utils.Log;
 
 /**
@@ -49,12 +45,7 @@ import quangnam.com.base.utils.Log;
  * Base class Activity use for this application.
  * Use this base class so you can handle life cycle to debug or add functional
  */
-public class BaseActivity extends AppCompatActivity implements IPreviousID, AutoUnsubscribe {
-    private static final String ARG_SAVE_ID = BaseActivity.class.getName() + "_savedID";
-
-    private int mSaveID;
-
-    private CompositeDisposable mSubscriptions = new CompositeDisposable();
+public class BaseActivity extends AppCompatActivity {
     private Stack<IBaseFragment> mRequestStack;
     private ArrayList<OnFocusFragmentChanged> mFocusChangeListener;
 
@@ -65,19 +56,12 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
         super.onCreate(savedInstanceState);
         mRequestStack = new Stack<>();
 
-        if (savedInstanceState != null) {
-            mSaveID = savedInstanceState.getInt(ARG_SAVE_ID);
-        } else {
-            mSaveID = hashCode();
-        }
-
         Log.d("Activity %s onCreate", this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSubscriptions.dispose();
         Log.d("Activity %s onDestroy", this);
     }
 
@@ -96,8 +80,6 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        outState.putInt(ARG_SAVE_ID, mSaveID);
         Log.d("Activity %s onSaveInstanceState", this);
     }
 
@@ -186,11 +168,6 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
             newFragment.onFocusChange(true);
     }
 
-    @Override
-    public void subscribe(Disposable subscription) {
-        mSubscriptions.add(subscription);
-    }
-
     /**
      * Get current alert dialog. It help track only 1 {@link AlertDialogFragment} per {@link BaseActivity}
      */
@@ -207,9 +184,8 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
     public void onBackPressed() {
         IBaseFragment fragment = getFocusFragment();
 
-        if (fragment instanceof OnBackPressedListener) {
-            ((OnBackPressedListener) fragment).onBackPressed();
-        } else {
+        if (!(fragment instanceof OnBackPressedListener)
+                || !((OnBackPressedListener) fragment).onBackPressed()) {
             super.onBackPressed();
         }
     }
@@ -234,12 +210,6 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
         return null;
     }
 
-    @Override
-    public int getSaveID() {
-        return mSaveID;
-    }
-
-    @SuppressWarnings("WeakerAccess")
     public interface OnBackPressedListener {
         /**
          * Function handler onBack press in fragment
@@ -249,7 +219,6 @@ public class BaseActivity extends AppCompatActivity implements IPreviousID, Auto
         boolean onBackPressed();
     }
 
-    @SuppressWarnings("WeakerAccess")
     public interface OnFocusFragmentChanged {
         /**
          * Listener when focus fragment changed
