@@ -1,0 +1,6 @@
+apply(plugin = "config-android")
+apply(plugin = "config-compiler")
+apply(plugin = "config-repositories")
+apply(plugin = "config-coroutines")
+apply(plugin = "config-crashlytics")
+apply(plugin = "config-linters")
